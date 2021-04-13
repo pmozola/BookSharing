@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,12 @@ namespace BookSharing.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookSharing.API", Version = "v1" });
             });
+
+            services.AddHttpClient("Book",
+                a =>
+                {
+                    a.BaseAddress = new Uri(Configuration.GetValue<string>("BookApi"));
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
