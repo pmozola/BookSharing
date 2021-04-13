@@ -15,8 +15,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     FormsModule,
     IonicModule,
     AddBookPageRoutingModule,
-    ZXingScannerModule
+    ZXingScannerModule,
   ],
   declarations: [AddBookPage]
 })
-export class AddBookPageModule {}
+export class AddBookPageModule { }

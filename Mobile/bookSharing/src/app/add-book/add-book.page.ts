@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
+import { AddBookService } from './services/add-book.service';
 
 @Component({
   selector: 'app-add-book',
@@ -8,8 +9,8 @@ import { BarcodeFormat } from '@zxing/library';
 })
 export class AddBookPage implements OnInit {
 
-  constructor() { }
-  
+  constructor(private addBookService: AddBookService) { }
+
   allowedFormats = [
     BarcodeFormat.CODABAR,
     BarcodeFormat.AZTEC,
@@ -32,6 +33,8 @@ export class AddBookPage implements OnInit {
 
   public scanSuccessHandler($event: any) {
     console.log($event);
+    this.addBookService
+      .getBookByIsbn(+$event)
+      .subscribe(x => console.log(`book information from api ${x.title}`))
   }
-
 }

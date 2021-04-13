@@ -27,5 +27,14 @@ namespace BookSharing.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("{isbn}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookInformationResource))]
+        public async Task<IActionResult> Get(long isbn)
+        {
+            var result = await _sender.Send(new GetBookQuery(isbn));
+
+            return Ok(result);
+        }
     }
 }

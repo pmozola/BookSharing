@@ -11,9 +11,9 @@ export class AddBookService {
 
   constructor(private http: HttpClient) { }
 
-  getBookByIsbn(): Observable<BookInformation> {
-    var url = environment.booksharingApi + '';
-   
+  getBookByIsbn(isbn: number): Observable<BookInformation> {
+    var url = environment.booksharingApi + '/book/' + isbn;
+
     return this.http.get<BookInformation>(url);
   }
 }
