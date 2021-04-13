@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dodaj Ksiazke</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <zxing-scanner (scanSuccess)="scanSuccessHandler($event)" [formats]="allowedFormats"></zxing-scanner>
+</ion-content>
