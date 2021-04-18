@@ -7,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-book.page.scss'],
 })
 export class AddBookPage implements OnInit {
+  recognizedBarcode: number;
+
   ngOnInit(): void {
   }
 
   onCodeBarScaned($event: number) {
+    this.recognizedBarcode = $event;
     console.log($event)
   }
 }
