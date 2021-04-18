@@ -3,4 +3,5 @@ export class BookInformation {
     title: string;
     description: string;
     year: number;
+    imageUrl: string;
 }

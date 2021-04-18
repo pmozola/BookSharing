@@ -5,5 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <zxing-scanner (scanSuccess)="scanSuccessHandler($event)" [formats]="allowedFormats"></zxing-scanner>
+  <!-- <zxing-scanner (scanSuccess)="scanSuccessHandler($event)" [formats]="allowedFormats"></zxing-scanner> -->
+
+  <app-bar-code-reader></app-bar-code-reader>
+
+  <ion-item>
+    <ion-label>ISBN:</ion-label>
+    <ion-input disabled [value]="recognizedBarcode"></ion-input>
+  </ion-item>
+  <ion-button>Dalej</ion-button>
 </ion-content>

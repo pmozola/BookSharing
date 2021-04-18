@@ -8,6 +8,7 @@ import { AddBookPageRoutingModule } from './add-book-routing.module';
 
 import { AddBookPage } from './add-book.page';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { BarCodeReaderComponent } from './bar-code-reader/bar-code-reader.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AddBookPageRoutingModule,
     ZXingScannerModule,
   ],
-  declarations: [AddBookPage]
+  declarations: [AddBookPage, BarCodeReaderComponent]
 })
 export class AddBookPageModule { }
