@@ -32,7 +32,6 @@ export class AddBookPage implements OnInit {
   }
 
   public scanSuccessHandler($event: any) {
-    console.log($event);
     this.addBookService
       .getBookByIsbn(+$event)
       .subscribe(x => console.log(`book information from api ${x.title}`))
