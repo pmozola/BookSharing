@@ -22,7 +22,8 @@ export class BarCodeReaderComponent implements AfterViewInit {
     Quagga.init({
       inputStream: {
         constraints: {
-          facingMode: 'environment'
+          facingMode: 'environment',
+          height: '200px'
         },
         area: {
           top: '0%',
