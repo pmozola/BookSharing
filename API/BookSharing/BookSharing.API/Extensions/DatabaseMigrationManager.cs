@@ -1,5 +1,4 @@
 ﻿using System;
-
 using BookSharing.Infrastructure;
 using BookSharing.Infrastructure.SeedData;
 using Microsoft.Extensions.DependencyInjection;

@@ -24,6 +24,7 @@ namespace BookSharing.Application.QueryHandlers.Books
                 .ToListAsync(cancellationToken);
 
             return books;
+
         }
     }
 
