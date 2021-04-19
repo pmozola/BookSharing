@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
 using BookSharing.Infrastructure;
 using MediatR;
 
@@ -24,7 +23,6 @@ namespace BookSharing.Application.QueryHandlers.Books
                 .ToListAsync(cancellationToken);
 
             return books;
-
         }
     }
 

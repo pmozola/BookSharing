@@ -7,9 +7,9 @@ namespace BookSharing.Application.QueryHandlers.Books
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookInformationResource>
     {
-        private readonly IBookService _bookservice;
+        private readonly IBookInformationFromExternalSource _bookservice;
 
-        public GetBookQueryHandler(IBookService bookservice)
+        public GetBookQueryHandler(IBookInformationFromExternalSource bookservice)
         {
             this._bookservice = bookservice;
         }
@@ -17,15 +17,11 @@ namespace BookSharing.Application.QueryHandlers.Books
         {
             var book = await this._bookservice.GetBook(request.ISBN);
 
-
             return new BookInformationResource(
                 request.ISBN,
-            // "Testowa Ksiazka",
-            //"2020",
-            //"http://covers.openlibrary.org/b/id/5548424-L.jpg");
-            book.Title,
-            book.Year,
-            book.ImageUrl);
+                book.Title,
+                book.Year,
+                book.ImageUrl);
         }
     }
 
@@ -35,10 +31,10 @@ namespace BookSharing.Application.QueryHandlers.Books
     {
         public long ISBN { get; }
         public string Title { get; }
-        public string Year { get; }
+        public int Year { get; }
         public string ImageUrl { get; }
 
-        public BookInformationResource(long isbn, string title, string year, string imageUrl)
+        public BookInformationResource(long isbn, string title, int year, string imageUrl)
         {
             ISBN = isbn;
             Title = title;

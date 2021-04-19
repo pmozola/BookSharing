@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookSharing.Infrastructure.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace BookSharing.Infrastructure.BookApi
 {
-    public class BookApiRetriver : IBookService
+    public class BookApiRetriver : IBookInformationFromExternalSource
     {
-        private readonly IBookApi _bookApi;
-
-        public BookApiRetriver(IBookApi bookApi)
+        private readonly IGoogleBookApiClient _bookApi;
+        private readonly ILogger<BookApiRetriver> _logger;
+        public BookApiRetriver(IGoogleBookApiClient bookApi, ILogger<BookApiRetriver> logger)
         {
             this._bookApi = bookApi;
+            this._logger = logger;
         }
-        public async Task<BookView> GetBook(long isbn)
+        public async Task<BookShortInformation> GetBook(long isbn)
         {
             try
             {
                 var book = await this._bookApi.GetBookByISBN(isbn);
-              
-                return new BookView(isbn, "", "","", "");
+
+                return new BookShortInformation(isbn,  Autor:"", Title: "", Year: 250893, ImageUrl: "");
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
+                _logger.LogError("ISBN search exception", ex);
                 return null;
             }
         }

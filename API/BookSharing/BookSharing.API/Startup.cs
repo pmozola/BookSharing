@@ -31,9 +31,10 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
-            services.AddTransient<IBookService, BookApiRetriver>();
-         
-            services.AddRefitClient<IBookApi>().ConfigureHttpClient(c => c.BaseAddress = new Uri(/*"http://openlibrary.org"*/"https://www.googleapis.com"));
+            services.AddTransient<IBookInformationFromExternalSource, BookApiRetriver>();
+
+            services.AddRefitClient<IGoogleBookApiClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
 
             services.AddMediatR(typeof(GetAllBooksQueryHandler));
 
@@ -41,7 +42,6 @@ namespace BookSharing.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookSharing.API", Version = "v1" });
             });
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

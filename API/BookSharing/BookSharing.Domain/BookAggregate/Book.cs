@@ -1,11 +1,10 @@
-﻿using System;
-using BookSharing.Domain.Base;
+﻿using BookSharing.Domain.Base;
 
 namespace BookSharing.Domain.BookAggregate
 {
     public class Book : IAggregateRoot
     {
-        public Book(string ISBN, string Title, string Year)
+        public Book(string ISBN, string Title, int Year)
         {
             this.ISBN = ISBN;
             this.Title = Title;
@@ -15,6 +14,6 @@ namespace BookSharing.Domain.BookAggregate
         public int Id { get;  private set; }
         public string ISBN { get; private set; }
         public string Title { get; private set; }
-        public string Year { get; private set; }
+        public int Year { get; private set; }
     }
 }
