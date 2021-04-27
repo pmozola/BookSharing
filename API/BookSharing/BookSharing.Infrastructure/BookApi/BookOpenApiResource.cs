@@ -2,6 +2,7 @@
 
 namespace BookSharing.Infrastructure.BookApi
 {
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class IndustryIdentifier
     {
         public string type { get; set; }
@@ -24,10 +25,6 @@ namespace BookSharing.Infrastructure.BookApi
     {
         public string smallThumbnail { get; set; }
         public string thumbnail { get; set; }
-        public string small { get; set; }
-        public string medium { get; set; }
-        public string large { get; set; }
-        public string extraLarge { get; set; }
     }
 
     public class VolumeInfo
@@ -40,9 +37,10 @@ namespace BookSharing.Infrastructure.BookApi
         public List<IndustryIdentifier> industryIdentifiers { get; set; }
         public ReadingModes readingModes { get; set; }
         public int pageCount { get; set; }
-        public int printedPageCount { get; set; }
         public string printType { get; set; }
         public List<string> categories { get; set; }
+        public double averageRating { get; set; }
+        public int ratingsCount { get; set; }
         public string maturityRating { get; set; }
         public bool allowAnonLogging { get; set; }
         public string contentVersion { get; set; }
@@ -52,17 +50,7 @@ namespace BookSharing.Infrastructure.BookApi
         public string previewLink { get; set; }
         public string infoLink { get; set; }
         public string canonicalVolumeLink { get; set; }
-    }
-
-    public class Layer
-    {
-        public string layerId { get; set; }
-        public string volumeAnnotationsVersion { get; set; }
-    }
-
-    public class LayerInfo
-    {
-        public List<Layer> layers { get; set; }
+        public string subtitle { get; set; }
     }
 
     public class ListPrice
@@ -100,7 +88,6 @@ namespace BookSharing.Infrastructure.BookApi
     public class Epub
     {
         public bool isAvailable { get; set; }
-        public string acsTokenLink { get; set; }
     }
 
     public class Pdf
@@ -123,15 +110,27 @@ namespace BookSharing.Infrastructure.BookApi
         public bool quoteSharingAllowed { get; set; }
     }
 
-    public class BookOpenApiResource
+    public class SearchInfo
+    {
+        public string textSnippet { get; set; }
+    }
+
+    public class Item
     {
         public string kind { get; set; }
         public string id { get; set; }
         public string etag { get; set; }
         public string selfLink { get; set; }
         public VolumeInfo volumeInfo { get; set; }
-        public LayerInfo layerInfo { get; set; }
         public SaleInfo saleInfo { get; set; }
         public AccessInfo accessInfo { get; set; }
+        public SearchInfo searchInfo { get; set; }
+    }
+
+    public class BookOpenApiResource
+    {
+        public string kind { get; set; }
+        public int totalItems { get; set; }
+        public List<Item> items { get; set; }
     }
 }

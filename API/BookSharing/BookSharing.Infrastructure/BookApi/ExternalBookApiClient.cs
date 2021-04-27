@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BookSharing.Infrastructure.Interface;
 using Microsoft.Extensions.Logging;
@@ -16,31 +17,23 @@ namespace BookSharing.Infrastructure.BookApi
         }
         public async Task<BookShortInformation> GetBook(long isbn)
         {
-            try
-            {
-                var book = await _bookApi.GetBookByISBN(isbn);
-                try
-                {
-                    Int32.TryParse(book.volumeInfo.publishedDate, out int yearInt);
+            var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
-                    return new BookShortInformation(
-                        isbn,
-                        Autor: book.volumeInfo.authors,
-                        Title: book.volumeInfo.title,
-                        Year: yearInt,
-                        ImageUrl: book.volumeInfo.imageLinks.ToString());
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError("Date converting error", ex);
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            var books = bookResourceList.items.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
+            if (books == null || !books.Any() )
             {
-                _logger.LogError("ISBN search exception", ex);
                 return null;
             }
+
+            //TODO format provider
+            var publishedDate = DateTime.TryParse(books.First().volumeInfo.publishedDate, out DateTime result) ? result : new DateTime(); 
+
+            return new BookShortInformation(
+                Isbn: isbn,
+                Autor: books.First().volumeInfo.authors,
+                Title: books.First().volumeInfo.title,
+                Year: publishedDate.Year,
+                ImageUrl: books.First().volumeInfo.imageLinks.thumbnail);
         }
     }
 }
