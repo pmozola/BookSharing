@@ -31,7 +31,7 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
-            services.AddTransient<IBookInformationFromExternalSource, BookApiRetriver>();
+            services.AddTransient<IExternalBookApiClient, ExternalBookApiClient>();
 
             services.AddRefitClient<IGoogleBookApiClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));

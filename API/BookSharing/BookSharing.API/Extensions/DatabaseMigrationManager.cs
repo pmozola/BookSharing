@@ -26,7 +26,6 @@ namespace BookSharing.API.Extensions
                     throw;
                 }
             }
-
             return host;
         }
     }

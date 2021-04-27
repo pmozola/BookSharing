@@ -7,11 +7,11 @@ namespace BookSharing.Application.QueryHandlers.Books
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookInformationResource>
     {
-        private readonly IBookInformationFromExternalSource _bookservice;
+        private readonly IExternalBookApiClient _bookservice;
 
-        public GetBookQueryHandler(IBookInformationFromExternalSource bookservice)
+        public GetBookQueryHandler(IExternalBookApiClient bookservice)
         {
-            this._bookservice = bookservice;
+            _bookservice = bookservice;
         }
         public async Task<BookInformationResource> Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
@@ -19,9 +19,10 @@ namespace BookSharing.Application.QueryHandlers.Books
 
             return new BookInformationResource(
                 request.ISBN,
-                book.Title,
-                book.Year,
-                book.ImageUrl);
+                book.bookString);
+                //book.Title,
+                //book.Year,
+                //book.ImageUrl);
         }
     }
 
@@ -33,13 +34,15 @@ namespace BookSharing.Application.QueryHandlers.Books
         public string Title { get; }
         public int Year { get; }
         public string ImageUrl { get; }
+        public string BookString { get; set; }
 
-        public BookInformationResource(long isbn, string title, int year, string imageUrl)
+        public BookInformationResource(long isbn, string bookString/*string title, int year, string imageUrl*/)
         {
             ISBN = isbn;
-            Title = title;
-            Year = year;
-            ImageUrl = imageUrl;
+            BookString = bookString;
+            //Title = title;
+            //Year = year;
+            //ImageUrl = imageUrl;
         }
     }
 }

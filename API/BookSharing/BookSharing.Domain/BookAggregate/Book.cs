@@ -10,7 +10,6 @@ namespace BookSharing.Domain.BookAggregate
             this.Title = Title;
             this.Year = Year;
         }
-
         public int Id { get;  private set; }
         public string ISBN { get; private set; }
         public string Title { get; private set; }
