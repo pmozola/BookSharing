@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-
 import Quagga from 'quagga';
 
 @Component({
@@ -9,6 +8,7 @@ import Quagga from 'quagga';
 })
 export class BarCodeReaderComponent implements AfterViewInit {
   @Output() codeBarScaned = new EventEmitter<number>();
+  recognizedBarcode: number;
 
   @ViewChild('barCodeReader') barCodeReaderChildView: ElementRef;
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
@@ -55,16 +55,26 @@ export class BarCodeReaderComponent implements AfterViewInit {
   onBarcodeScanned(code: string) {
     this.pauseBarcodeRecognition();
     this.changeDetectorRef.detectChanges();
+    this.recognizedBarcode = +code;
 
     this.codeBarScaned.emit(+code);
   }
 
   resumeBarcodeRecognition() {
-    this.barCodeReaderChildView.nativeElement.getElementsByTagName("video")[0].start();
-    Quagga.start();
+    this.barCodeReaderChildView.nativeElement.getElementsByTagName("video")[0].play();
+    setTimeout(function () {
+      Quagga.start();
+    }, 10);
   }
+
   pauseBarcodeRecognition() {
     this.barCodeReaderChildView.nativeElement.getElementsByTagName("video")[0].pause();
     Quagga.pause();
+  }
+
+  retry(): void {
+    this.recognizedBarcode = null;
+    this.codeBarScaned.emit(null);
+    this.resumeBarcodeRecognition();
   }
 }

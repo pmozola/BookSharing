@@ -1,0 +1,23 @@
+<ion-card>
+
+  <ion-card-header>
+    <ion-card-subtitle>{{ book.authors }}</ion-card-subtitle>
+    <ion-card-title>{{ book.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">
+          <div>
+            {{ book.description }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <img [src]="book.imageUrl" />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

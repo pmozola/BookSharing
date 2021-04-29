@@ -1,17 +1,14 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Dodaj Ksiazke</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <zxing-scanner (scanSuccess)="scanSuccessHandler($event)" [formats]="allowedFormats"></zxing-scanner> -->
-
   <app-bar-code-reader id="bar-code-reader" (codeBarScaned)="onCodeBarScaned($event)"></app-bar-code-reader>
-
-  <ion-item>
-    <ion-label>ISBN:</ion-label>
-    <ion-input disabled [value]="recognizedBarcode"></ion-input>
-  </ion-item>
-  <ion-button>Dalej</ion-button>
+  <app-found-book *ngIf="book" [book]="book"></app-found-book>
+  <ion-button *ngIf="book">Dalej</ion-button>
 </ion-content>

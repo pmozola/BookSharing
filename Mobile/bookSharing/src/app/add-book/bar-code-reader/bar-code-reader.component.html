@@ -1,1 +1,17 @@
-<div #barCodeReader id="interactive" class="viewport" (codeBarScaned)="onCodeBarScaned($event)"></div>
+<ion-card>
+    <div #barCodeReader id="interactive" class="viewport" (codeBarScaned)="onCodeBarScaned($event)"></div>
+    <ion-card-header>
+        <ion-card-title>Zeskanuj kod QR</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-item *ngIf="recognizedBarcode">
+            <div>
+                <ion-label>ISBN:</ion-label>
+                <ion-input disabled [value]="recognizedBarcode"></ion-input>
+            </div>
+            <div>
+                <ion-button color="warning" *ngIf="recognizedBarcode" (click)="retry()">Spróbuj ponownie</ion-button>
+            </div>
+        </ion-item>
+    </ion-card-content>
+</ion-card>

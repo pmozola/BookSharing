@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookInformation } from './models/book.model';
+import { AddBookService } from './services/add-book.service';
 
 
 @Component({
@@ -8,12 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddBookPage implements OnInit {
   recognizedBarcode: number;
+  book: BookInformation;
 
-  ngOnInit(): void {
-  }
+  constructor(private addbookService: AddBookService) { }
+  ngOnInit(): void { }
 
   onCodeBarScaned($event: number) {
     this.recognizedBarcode = $event;
-    console.log($event)
+    if ($event) {
+      this.addbookService.getBookByIsbn($event).subscribe(x => this.book = x)
+    }
   }
 }
