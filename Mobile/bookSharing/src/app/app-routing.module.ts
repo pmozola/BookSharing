@@ -40,8 +40,11 @@ const routes: Routes = [
     path: "",
     redirectTo: "/home",
     pathMatch: "full"
+  },
+  {
+    path: 'bookAdded',
+    loadChildren: () => import('./book-added-successfully/book-added-successfully.module').then( m => m.BookAddedSuccessfullyPageModule)
   }
-
 ];
 
 @NgModule({

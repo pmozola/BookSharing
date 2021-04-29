@@ -1,0 +1,29 @@
+<ion-card>
+
+  <ion-card-header>
+    <ion-card-subtitle></ion-card-subtitle>
+    <ion-card-title>Informacje o egzemplarzu</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div [formGroup]="form">
+
+      <ion-item>
+        <ion-range min="1" max="5" step="1" formControlName="rank" snaps color="danger">
+          <ion-icon slot="start" size="small" color="danger" name="star"></ion-icon>
+          <ion-icon slot="end" color="success" name="star"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Dodatkowe informacje</ion-label>
+        <ion-textarea formControlName="description"
+          placeholder="Wpisz dodatkowe informacje o tej ksiazce, ktore moga byc wazne dla odbierajacego">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-button (click)="save()">Dodaj</ion-button>
+
+    </div>
+  </ion-card-content>
+
+</ion-card>

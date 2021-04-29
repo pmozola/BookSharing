@@ -14,8 +14,7 @@ namespace BookSharing.Application.QueryHandlers.Books
                 "Testowa Ksiazka",
                 "Autor ksiazki",
                 @"Zmień sposób myślenia o projektowaniu systemów informatycznych! Tworzenie skomplikowanych systemów informatycznych 
-                  wymaga nowego podejścia. Dotychczas stosowane metody przestają się sprawdzać i generują mnóstwo problemów.
-                  Odpowiedzią na nie jest DomainDriven Design, w skrócie DDD. W tym podejściu szczególny nacisk kładzie się na tworzenie...",
+                  wymaga nowego podejścia. Dotychczas stosowane metody przestają się sprawdzać i generują mnóstwo problemów.",
                 2020,
                 "http://covers.openlibrary.org/b/id/5548424-L.jpg");
         }

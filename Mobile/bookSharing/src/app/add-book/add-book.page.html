@@ -10,5 +10,6 @@
 <ion-content>
   <app-bar-code-reader id="bar-code-reader" (codeBarScaned)="onCodeBarScaned($event)"></app-bar-code-reader>
   <app-found-book *ngIf="book" [book]="book"></app-found-book>
-  <ion-button *ngIf="book">Dalej</ion-button>
+  <app-save-book *ngIf="book" [isbn]="book.isbn"></app-save-book>
+
 </ion-content>

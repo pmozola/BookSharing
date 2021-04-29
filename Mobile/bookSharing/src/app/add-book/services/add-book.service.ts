@@ -8,13 +8,13 @@ import { BookInformation } from '../models/book.model';
   providedIn: 'root'
 })
 export class AddBookService {
+  private bookApiUrl: string = environment.booksharingApi + '/book/';
 
   constructor(private http: HttpClient) { }
 
   getBookByIsbn(isbn: number): Observable<BookInformation> {
-    var url = environment.booksharingApi + '/book/' + isbn;
+    var url = this.bookApiUrl + isbn;
 
     return this.http.get<BookInformation>(url);
   }
 }
-

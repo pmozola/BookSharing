@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -10,6 +10,7 @@ import { AddBookPage } from './add-book.page';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarCodeReaderComponent } from './bar-code-reader/bar-code-reader.component';
 import { FoundBookComponent } from './found-book/found-book.component';
+import { SaveBookComponent } from './save-book/save-book.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,13 @@ import { FoundBookComponent } from './found-book/found-book.component';
     IonicModule,
     AddBookPageRoutingModule,
     ZXingScannerModule,
+    ReactiveFormsModule
   ],
-  declarations: [AddBookPage, BarCodeReaderComponent, FoundBookComponent]
+  declarations: [
+    AddBookPage,
+    BarCodeReaderComponent,
+    FoundBookComponent,
+    SaveBookComponent,
+  ]
 })
 export class AddBookPageModule { }
