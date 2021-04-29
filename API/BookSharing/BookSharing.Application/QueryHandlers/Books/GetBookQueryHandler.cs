@@ -22,5 +22,5 @@ namespace BookSharing.Application.QueryHandlers.Books
 
     public record GetBookQuery(long ISBN) : IRequest<BookInformationResource>;
 
-    public record BookInformationResource(long isbn, string Title, string authors, string Description, int Year, string ImageUrl);
+    public record BookInformationResource(long Isbn, string Title, string Authors, string Description, int Year, string ImageUrl);
 }
