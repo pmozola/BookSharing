@@ -20,19 +20,18 @@ namespace BookSharing.Infrastructure.BookApi
             var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
             var books = bookResourceList.items.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
-            if (books == null || !books.Any() )
+            if (books == null || !books.Any())
             {
                 return null;
             }
 
-            //TODO format provider
-            var publishedDate = DateTime.TryParse(books.First().volumeInfo.publishedDate, out DateTime result) ? result : new DateTime(); 
+            Int32.TryParse(books.First().volumeInfo.publishedDate, out int publishedDate);
 
             return new BookShortInformation(
                 Isbn: isbn,
                 Autor: books.First().volumeInfo.authors,
                 Title: books.First().volumeInfo.title,
-                Year: publishedDate.Year,
+                Year: publishedDate,
                 ImageUrl: books.First().volumeInfo.imageLinks.thumbnail);
         }
     }

@@ -17,11 +17,11 @@ namespace BookSharing.Application.QueryHandlers.Books
         {
             var book = await _bookservice.GetBook(request.ISBN);
 
-            return new BookInformationResource(book.Isbn, book.Title, book.Year, book.ImageUrl, string.Join(", ", book.Autor));  
+            return new BookInformationResource(book.Isbn, string.Join(", ", book.Autor), book.Title, book.Year, book.ImageUrl);  
         }
     }
 
     public record GetBookQuery(long ISBN) : IRequest<BookInformationResource>;
 
-    public record  BookInformationResource (long ISBN, string Title, int Year, string ImageUrl, string Authors);
+    public record  BookInformationResource (long ISBN, string Authors, string Title, int Year, string ImageUrl);
 }
