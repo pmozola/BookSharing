@@ -16,12 +16,16 @@ namespace BookSharing.Application.QueryHandlers.Books
         public async Task<BookInformationResource> Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
             var book = await _bookInformationProvider.GetBook(request.ISBN);
+            if (book == null)
+            {
+                return null;
+            }
 
-            return new BookInformationResource(book.Isbn, string.Join(", ", book.Autor), book.Title, book.Year, book.ImageUrl);  
+            return new BookInformationResource(book.Isbn, book.Title, book.Description, string.Join(", ", book.Autor), book.Year, book.ImageUrl);
         }
     }
 
     public record GetBookQuery(long ISBN) : IRequest<BookInformationResource>;
 
-    public record BookInformationResource (long ISBN, string Authors, string Title, int Year, string ImageUrl);
+    public record BookInformationResource(long Isbn, string Title, string Authors, string Description, int Year, string ImageUrl);
 }

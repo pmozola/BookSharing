@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.Google;
 
@@ -17,7 +18,7 @@ namespace BookSharing.Infrastructure.BookApi
         {
             var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
-            var books = bookResourceList.items.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
+            var books = bookResourceList?.items?.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
             
             if (books == null || !books.Any())
             {
@@ -28,6 +29,7 @@ namespace BookSharing.Infrastructure.BookApi
                 Isbn: isbn,
                 Autor: books.First().volumeInfo.authors,
                 Title: books.First().volumeInfo.title,
+                Description: books.First().volumeInfo.description,
                 Year: int.TryParse(books.First().volumeInfo.publishedDate, out int publishedDate) ? publishedDate : 1900,
                 ImageUrl: books.First().volumeInfo.imageLinks?.thumbnail);
         }

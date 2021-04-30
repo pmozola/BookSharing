@@ -47,7 +47,7 @@ namespace BookSharing.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (IsSwaggerEnabled(env))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -68,6 +68,10 @@ namespace BookSharing.API
             {
                 endpoints.MapControllers();
             });
+        }
+        private bool IsSwaggerEnabled(IWebHostEnvironment env)
+        {
+            return env.IsDevelopment() || Configuration.GetValue<bool>("EnabbleSwaggerInProduction");
         }
     }
 }

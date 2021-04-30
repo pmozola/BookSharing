@@ -7,5 +7,6 @@ namespace BookSharing.Domain.BookAggregate
     {
         public Task<BookShortInformation> GetBook(long isbn);
     }
-    public record BookShortInformation(long Isbn, IList<string> Autor, string Title, int Year, string ImageUrl);
+
+    public record BookShortInformation(long Isbn, IList<string> Autor, string Title, string Description, int Year, string ImageUrl);
 }

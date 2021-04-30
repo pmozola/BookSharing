@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddBookPage } from './add-book.page';
+import { BookAddedSuccessfullyPage } from './book-added-successfully.page';
 
-describe('AddBookPage', () => {
-  let component: AddBookPage;
-  let fixture: ComponentFixture<AddBookPage>;
+describe('BookAddedSuccessfullyPage', () => {
+  let component: BookAddedSuccessfullyPage;
+  let fixture: ComponentFixture<BookAddedSuccessfullyPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddBookPage ],
+      declarations: [ BookAddedSuccessfullyPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddBookPage);
+    fixture = TestBed.createComponent(BookAddedSuccessfullyPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
