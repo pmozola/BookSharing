@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace BookSharing.Infrastructure.BookApi
+#pragma warning disable IDE1006 // Naming Styles
+namespace BookSharing.Infrastructure.BookApi.Google
 {
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class IndustryIdentifier
     {
+
         public string type { get; set; }
+
         public string identifier { get; set; }
     }
 
@@ -127,10 +129,11 @@ namespace BookSharing.Infrastructure.BookApi
         public SearchInfo searchInfo { get; set; }
     }
 
-    public class BookOpenApiResource
+    public class GoogleBookApiResponse
     {
         public string kind { get; set; }
         public int totalItems { get; set; }
         public List<Item> items { get; set; }
     }
+#pragma warning restore IDE1006 // Naming Styles
 }

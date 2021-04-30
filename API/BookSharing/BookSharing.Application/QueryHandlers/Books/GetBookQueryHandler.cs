@@ -1,21 +1,21 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using BookSharing.Infrastructure.Interface;
+using BookSharing.Domain.BookAggregate;
 using MediatR;
 
 namespace BookSharing.Application.QueryHandlers.Books
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookInformationResource>
     {
-        private readonly IExternalBookApiClient _bookservice;
+        private readonly IExternalBookApiProvider _bookInformationProvider;
 
-        public GetBookQueryHandler(IExternalBookApiClient bookservice)
+        public GetBookQueryHandler(IExternalBookApiProvider bookInformationProvider)
         {
-            _bookservice = bookservice;
+            _bookInformationProvider = bookInformationProvider;
         }
         public async Task<BookInformationResource> Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
-            var book = await _bookservice.GetBook(request.ISBN);
+            var book = await _bookInformationProvider.GetBook(request.ISBN);
 
             return new BookInformationResource(book.Isbn, string.Join(", ", book.Autor), book.Title, book.Year, book.ImageUrl);  
         }
@@ -23,5 +23,5 @@ namespace BookSharing.Application.QueryHandlers.Books
 
     public record GetBookQuery(long ISBN) : IRequest<BookInformationResource>;
 
-    public record  BookInformationResource (long ISBN, string Authors, string Title, int Year, string ImageUrl);
+    public record BookInformationResource (long ISBN, string Authors, string Title, int Year, string ImageUrl);
 }

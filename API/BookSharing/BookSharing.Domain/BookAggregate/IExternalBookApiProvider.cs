@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookSharing.Infrastructure.Interface
+namespace BookSharing.Domain.BookAggregate
 {
-    public interface IExternalBookApiClient
+    public interface IExternalBookApiProvider
     {
         public Task<BookShortInformation> GetBook(long isbn);
     }
