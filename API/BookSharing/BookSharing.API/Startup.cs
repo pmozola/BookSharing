@@ -6,10 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
 using BookSharing.Application.QueryHandlers.Books;
 using BookSharing.Infrastructure;
+using BookSharing.Infrastructure.BookApi;
 using MediatR;
+using Refit;
+using BookSharing.Domain.BookAggregate;
+using BookSharing.Infrastructure.BookApi.Google;
 
 namespace BookSharing.API
 {
@@ -29,6 +32,10 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
+            services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
+
+            services.AddRefitClient<IGoogleBookApiClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
 
             services.AddMediatR(typeof(GetAllBooksQueryHandler));
 
@@ -36,12 +43,6 @@ namespace BookSharing.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookSharing.API", Version = "v1" });
             });
-
-            services.AddHttpClient("Book",
-                a =>
-                {
-                    a.BaseAddress = new Uri(Configuration.GetValue<string>("BookApi"));
-                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
