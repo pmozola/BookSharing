@@ -9,6 +9,7 @@ using BookSharing.Domain.Base;
 using System;
 using BookSharing.Infrastructure.Models;
 using Newtonsoft.Json;
+using BookSharing.Domain.UserWantedAggregate;
 
 namespace BookSharing.Infrastructure
 {
@@ -21,6 +22,7 @@ namespace BookSharing.Infrastructure
 
         public DbSet<Book> Books { get; set; }
         public DbSet<UserBook> UserBooks { get; set; }
+        public DbSet<UserWanted> UserWantedBooks { get; set; }
 
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
