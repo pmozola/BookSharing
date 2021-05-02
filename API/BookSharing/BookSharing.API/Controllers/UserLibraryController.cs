@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using BookSharing.Application.CommandHandlers.UserLibrary;
 using BookSharing.Application.QueryHandlers.UserLibrary;
+using BookSharing.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,10 +38,19 @@ namespace BookSharing.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _sender.Send(new MarkUserBookAsGivenCommand(id)));
+            var result = await _sender.Send(new MarkUserBookAsGivenCommand(id));
+
+            return result.Match<IActionResult>(
+                success: Ok,
+                error: exception => exception switch
+                {
+                    NotFoundException => NotFound(),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError)
+                });
         }
     }
 }
