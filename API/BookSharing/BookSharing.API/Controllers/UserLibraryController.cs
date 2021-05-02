@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using BookSharing.Application.CommandHandlers.UserLibrary;
 using BookSharing.Application.QueryHandlers.UserLibrary;
@@ -31,7 +30,7 @@ namespace BookSharing.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserBookShortInformation>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserBookShortInformation[]))]
         public async Task<IActionResult> Get()
         {
             return Ok(await _sender.Send(new GetAllUserBooksQuery()));
