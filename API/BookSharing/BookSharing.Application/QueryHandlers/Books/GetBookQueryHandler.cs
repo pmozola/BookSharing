@@ -10,23 +10,38 @@ namespace BookSharing.Application.QueryHandlers.Books
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, Result<BookInformationResource>>
     {
         private readonly IExternalBookApiProvider _bookInformationProvider;
+        private readonly IBookRepository _repository;
 
-        public GetBookQueryHandler(IExternalBookApiProvider bookInformationProvider)
+        public GetBookQueryHandler(IExternalBookApiProvider bookInformationProvider, IBookRepository repository)
         {
             _bookInformationProvider = bookInformationProvider;
+            _repository = repository;
         }
 
         async Task<Result<BookInformationResource>> IRequestHandler<GetBookQuery, Result<BookInformationResource>>.Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
-            var book = await _bookInformationProvider.GetBook(request.ISBN);
-            
-            if (book == null)
+            var book = await _repository.GetAsync(request.ISBN, cancellationToken);
+            if (book != null)
             {
-                return Result<BookInformationResource>.Error(new NotFoundException());
+                return Result<BookInformationResource>.Success(
+                        new BookInformationResource(book.ISBN, book.Title, book.Description, book.Author, book.Year, book.ImageUrl));
+
             }
 
-            return Result<BookInformationResource>.Success(
-                new BookInformationResource(book.Isbn, book.Title, book.Description, string.Join(", ", book.Autor), book.Year, book.ImageUrl));
+            var externalBookInformation = await _bookInformationProvider.GetBook(request.ISBN);
+            if (externalBookInformation != null)
+            {
+                return Result<BookInformationResource>.Success(
+                    new BookInformationResource(
+                        externalBookInformation.Isbn,
+                        externalBookInformation.Title,
+                        externalBookInformation.Description,
+                        string.Join(", ", externalBookInformation.Autor),
+                        externalBookInformation.Year,
+                        externalBookInformation.ImageUrl));
+            }
+
+            return Result<BookInformationResource>.Error(new NotFoundException());
         }
     }
 

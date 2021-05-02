@@ -8,7 +8,7 @@ namespace BookSharing.Infrastructure.Repositories
 {
     public class UserBookRepository : IUserBookRepository
     {
-        private BookSharingDbContext _dbContext;
+        private readonly BookSharingDbContext _dbContext;
 
         public UserBookRepository(BookSharingDbContext dbContext)
         {
