@@ -9,7 +9,7 @@ using BookSharing.Infrastructure;
 
 namespace BookSharing.Application.Services
 {
-    public class BookService :IBookService
+    public class BookService : IBookService
     {
         private readonly BookSharingDbContext _dbContext;
 
@@ -20,15 +20,7 @@ namespace BookSharing.Application.Services
 
         public IList<BookViewModel> GetBook(string isbn)
         {
-            return _dbContext.Books.Where(x => x.ISBN == isbn)
-                .Select(x => new BookViewModel
-                {
-                    Author = x.Author,
-                    ImageUrl = x.ImageUrl,
-                    Title = x.Title,
-                    Year = x.Year,
-                    Description = x.Description
-                }).ToList();
+            return new List<BookViewModel>();
         }
     }
 }

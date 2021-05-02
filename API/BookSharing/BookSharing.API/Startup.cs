@@ -7,9 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-using BookSharing.Application.QueryHandlers.Books;
 using BookSharing.Infrastructure;
 using MediatR;
+using BookSharing.Application.QueryHandlers.UserLibrary;
+using BookSharing.Infrastructure.Repositories;
+using BookSharing.Domain.UserBookAggregate;
+using BookSharing.Application.Interface;
+using BookSharing.API.Infrastructure;
 
 namespace BookSharing.API
 {
@@ -29,8 +33,10 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
+            services.AddTransient<IUserBookRepository, UserBookRepository>();
+            services.AddTransient<IUserContext, FakeHttpUserContext>();
 
-            services.AddMediatR(typeof(GetAllBooksQueryHandler));
+            services.AddMediatR(typeof(GetAllUserBooksQuery));
 
             services.AddSwaggerGen(c =>
             {

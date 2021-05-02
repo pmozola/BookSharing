@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommandHandlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BookSharing.Infrastructure\BookSharing.Infrastructure.csproj" />
   </ItemGroup>
 
