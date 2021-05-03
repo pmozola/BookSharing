@@ -19,6 +19,7 @@ namespace BookSharing.API.Extensions
                 try
                 {
                     BooksSeedData.Seed(appContext).Wait();
+                    UserBooksSeedData.Seed(appContext).Wait();
                 }
                 catch (Exception ex)
                 {

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using BookSharing.Application.QueryHandlers.Books;
 using MediatR;
+using BookSharing.Domain.Exceptions;
 
 namespace BookSharing.API.Controllers
 {
@@ -19,22 +19,20 @@ namespace BookSharing.API.Controllers
             _sender = sender;
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<BookResource>))]
-        public async Task<IActionResult> Get()
-        {
-            var result = await _sender.Send(new GetAllBooksQuery());
-
-            return Ok(result);
-        }
-
         [HttpGet("{isbn}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookInformationResource))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(long isbn)
         {
             var result = await _sender.Send(new GetBookQuery(isbn));
 
-            return Ok(result);
+            return result.Match<IActionResult>(
+                success: data => Ok(data),
+                error: exception => exception switch
+                {
+                    NotFoundException => NotFound(),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError)
+                });
         }
     }
 }

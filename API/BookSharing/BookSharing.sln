@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.API", "BookSharing.API\BookSharing.API.csproj", "{9A1A73DE-2458-4036-B3DB-73127BFB8BA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.API", "BookSharing.API\BookSharing.API.csproj", "{9A1A73DE-2458-4036-B3DB-73127BFB8BA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookSharing", "BookSharing", "{2E38A37C-68CB-4918-822F-2310B96D2574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.Application", "BookSharing.Application\BookSharing.Application.csproj", "{61F704DA-3C36-4E56-A09D-F02E6589F69A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Application", "BookSharing.Application\BookSharing.Application.csproj", "{61F704DA-3C36-4E56-A09D-F02E6589F69A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.Domain", "BookSharing.Domain\BookSharing.Domain.csproj", "{7CE83CB0-B444-4E16-8DA0-52F4582E126F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Domain", "BookSharing.Domain\BookSharing.Domain.csproj", "{7CE83CB0-B444-4E16-8DA0-52F4582E126F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.Infrastructure", "BookSharing.Infrastructure\BookSharing.Infrastructure.csproj", "{E76DFA1F-31BB-4231-B89B-ACCC831396BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Infrastructure", "BookSharing.Infrastructure\BookSharing.Infrastructure.csproj", "{E76DFA1F-31BB-4231-B89B-ACCC831396BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

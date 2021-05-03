@@ -6,14 +6,21 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using BookSharing.Application.QueryHandlers.Books;
 using BookSharing.Infrastructure;
 using BookSharing.Infrastructure.BookApi;
 using MediatR;
+using BookSharing.Application.QueryHandlers.UserLibrary;
+using BookSharing.Infrastructure.Repositories;
+using BookSharing.Domain.UserBookAggregate;
+using BookSharing.Application.Interface;
+using BookSharing.API.Infrastructure;
 using Refit;
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.Google;
-using BookSharing.Infrastructure.BookApi.OpenLibrary;
+using BookSharing.API.BackgroundTasks;
+using Microsoft.AspNetCore.SignalR;
+using BookSharing.API.SingnalRHubs;
+using BookSharing.Domain.UserWantedAggregate;
 
 namespace BookSharing.API
 {
@@ -42,8 +49,23 @@ namespace BookSharing.API
 
             services.AddRefitClient<IOpenLibraryApiClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("OpenLibraryBookApi")));
+            services.AddTransient<IUserBookRepository, UserBookRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IUserWantedRepository, UserWantedRepository>();
 
-            services.AddMediatR(typeof(GetAllBooksQueryHandler));
+            services.AddTransient<IUserContext, FakeHttpUserContext>();
+            services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
+
+            services.AddHostedService<OutboxMessageBackgroundTask>();
+
+            services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, BookSharingSignalRUserProvider>();
+            services.AddTransient<IWantedBookRealTimeNotifcation, WantedBookRealTimeNotifcation>();
+
+            services.AddRefitClient<IGoogleBookApiClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
+
+            services.AddMediatR(typeof(GetAllUserBooksQuery));
 
             services.AddSwaggerGen(c =>
             {
@@ -73,6 +95,7 @@ namespace BookSharing.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<WantedBooksHub>("/wantedBookHub");
             });
         }
         private bool IsSwaggerEnabled(IWebHostEnvironment env)

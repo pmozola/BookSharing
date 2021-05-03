@@ -2,7 +2,7 @@
 
 namespace BookSharing.API.Infrastructure
 {
-    public class HttpUserContext : IUserContext
+    public class FakeHttpUserContext : IUserContext
     {
         // TODO mocked until authorization is implemented
         public int GetUserId() => 1;

@@ -4,15 +4,23 @@ namespace BookSharing.Domain.BookAggregate
 {
     public class Book : IAggregateRoot
     {
-        public Book(string ISBN, string Title, int Year)
+        public Book(long isbn, string title, string author, int year, string description, string imageUrl)
         {
-            this.ISBN = ISBN;
-            this.Title = Title;
-            this.Year = Year;
+            ISBN = isbn;
+            Title = title;
+            Author = author;
+            Year = year;
+            Description = description;
+            ImageUrl = imageUrl;
         }
+        private Book() { }
+
         public int Id { get;  private set; }
-        public string ISBN { get; private set; }
+        public long ISBN { get; private set; }
         public string Title { get; private set; }
+        public string Author { get; private set; }
+        public string ImageUrl { get; private set; }
         public int Year { get; private set; }
+        public string Description { get; private set; }
     }
 }

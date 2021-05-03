@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.Google;
@@ -15,7 +15,7 @@ namespace BookSharing.Infrastructure.BookApi
 
         public async Task<BookShortInformation> GetBook(long isbn)
         {
-            var bookResourceList = await _bookApi.GetBookByIsbnFromGoogleApi(isbn);
+            var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
             var books = bookResourceList?.items?.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
             
