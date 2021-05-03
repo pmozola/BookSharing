@@ -1,4 +1,5 @@
-﻿using BookSharing.Domain.Base;
+﻿using System;
+using BookSharing.Domain.Base;
 
 namespace BookSharing.Domain.BookAggregate
 {
