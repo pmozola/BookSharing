@@ -1,5 +1,6 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.Google;
 

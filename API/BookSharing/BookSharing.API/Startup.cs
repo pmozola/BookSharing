@@ -56,6 +56,7 @@ namespace BookSharing.API
             services.AddTransient<IUserWantedRepository, UserWantedRepository>();
 
             services.AddTransient<IUserContext, FakeHttpUserContext>();
+            
 
             services.AddHostedService<OutboxMessageBackgroundTask>();
 
