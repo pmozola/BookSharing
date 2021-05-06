@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +26,6 @@ using BookSharing.Domain.UserWantedAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace BookSharing.API
 {
@@ -47,7 +48,7 @@ namespace BookSharing.API
 
             // auth
             services.AddDbContext<AuthDbContext>(options => options.UseInMemoryDatabase("AuthDatabase"));
-            services.AddIdentity<AppUser, IdentityRole>(options =>
+            services.AddIdentity<AppUser, AppIdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 1;
@@ -74,7 +75,7 @@ namespace BookSharing.API
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUserWantedRepository, UserWantedRepository>();
 
-            services.AddTransient<IUserContext, FakeHttpUserContext>();
+            services.AddTransient<IUserContext, HttpContextUser>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -87,8 +88,8 @@ namespace BookSharing.API
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
                         ValidAudience = "YourApplication",
                         ValidIssuer = "YourApplication",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yourSecretHashyourSecretHashyourSecretHash"))
@@ -100,6 +101,7 @@ namespace BookSharing.API
             services.AddSignalR();
             services.AddSingleton<IUserIdProvider, BookSharingSignalRUserProvider>();
             services.AddTransient<IWantedBookRealTimeNotifcation, WantedBookRealTimeNotifcation>();
+            services.AddHttpContextAccessor();
 
             services.AddMediatR(typeof(GetAllUserBooksQuery));
 
@@ -156,7 +158,7 @@ namespace BookSharing.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
                 endpoints.MapHub<WantedBooksHub>("/wantedBookHub");
             });
         }

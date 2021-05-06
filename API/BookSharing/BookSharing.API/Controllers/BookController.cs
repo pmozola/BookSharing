@@ -20,7 +20,6 @@ namespace BookSharing.API.Controllers
             _sender = sender;
         }
 
-        [Authorize]
         [HttpGet("{isbn}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookInformationResource))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

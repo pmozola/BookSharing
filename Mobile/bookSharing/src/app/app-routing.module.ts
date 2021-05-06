@@ -44,7 +44,11 @@ const routes: Routes = [
   {
     path: 'bookAdded',
     loadChildren: () => import('./book-added-successfully/book-added-successfully.module').then( m => m.BookAddedSuccessfullyPageModule)
+  },  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
+
 ];
 
 @NgModule({

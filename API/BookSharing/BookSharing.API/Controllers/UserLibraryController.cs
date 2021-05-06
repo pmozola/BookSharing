@@ -4,11 +4,13 @@ using BookSharing.Application.CommandHandlers.UserLibrary;
 using BookSharing.Application.QueryHandlers.UserLibrary;
 using BookSharing.Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSharing.API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("[controller]")]
     public class UserLibraryController : ControllerBase

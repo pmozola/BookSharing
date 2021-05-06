@@ -1,8 +1,4 @@
-﻿using BookSharing.Infrastructure;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,8 +7,15 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+using BookSharing.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+
 namespace BookSharing.API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("[controller]")]
     public class AuthController : ControllerBase
@@ -36,11 +39,12 @@ namespace BookSharing.API.Controllers
             {
                 var claims = new List<Claim>
             {
+                    new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iat, user.Id.ToString()),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
                 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yourSecretHashyourSecretHashyourSecretHash"));
-               
+
                 var token = new JwtSecurityToken(
                     issuer: "YourApplication",
                     audience: "YourApplication",

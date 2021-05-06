@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace BookSharing.API.Extensions
+namespace BookSharing.API.Extensions.Migrators
 {
     public static class DatabaseMigrationManager
     {
@@ -15,7 +15,7 @@ namespace BookSharing.API.Extensions
             {
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<BookSharingDbContext>>();
                 using var appContext = scope.ServiceProvider.GetRequiredService<BookSharingDbContext>();
-                
+
                 try
                 {
                     BooksSeedData.Seed(appContext).Wait();

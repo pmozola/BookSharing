@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 using BookSharing.API.Extensions;
+using BookSharing.API.Extensions.Migrators;
 
 namespace BookSharing.API
 {
@@ -12,6 +13,7 @@ namespace BookSharing.API
             CreateHostBuilder(args)
                 .Build()
                 .MigrateDatabase()
+                .MigrateUser()
                 .Run();
         }
 
