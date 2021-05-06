@@ -1,7 +1,7 @@
 ﻿using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.OpenLibrary;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,26 +20,26 @@ namespace BookSharing.Infrastructure.BookApi
         public async Task<BookShortInformation> GetBook(long isbn)
         {
             var responseString = await _openLibraryApi.GetBookByIsbnFromOpenLibraryApi(isbn);
-            
-            var book = JsonConvert.DeserializeObject<Root>(responseString);
-            var book2 = JObject.Parse(responseString)?.Properties()?.First()?.Value?.ToObject<Root>();
-            //List<string> isbnStringList = new List<string> { isbn.ToString() };
+            var book = JObject.Parse(responseString)?.Properties()?.First()?.Value?.ToObject<OpenLibraryBookApiResponse>();
 
-            //var books = responseString.details;
-            //List<string> authorsToList = new List<string> { books.authors.name };
+            List<string> isbnToStringList = new List<string> { isbn.ToString() };
 
-            //if (books == null || books.isbn_13 != isbnStringList)
-            //{
-            //    return null;
-            //}
-            return null;
-            //return new BookShortInformation(
-            //    Isbn: isbn,
-            //    Autor: authorsToList,
-            //    Title: books.title,
-            //    Description: books.description,
-            //    Year: int.TryParse(books.publish_date, out int publishedDate) ? publishedDate : 1900,
-            //    ImageUrl: responseString.info_url);
+            List<string> authorToStringList = book.details.authors.Select(x => x.name.ToString()).ToList();
+
+            DateTime.TryParse(book.details.publish_date, out DateTime publishedDate);
+
+            if (book == null || book.details.isbn_13 == isbnToStringList)
+            {
+                return null;
+            }
+           
+            return new BookShortInformation(
+                Isbn: isbn,
+                Autor: authorToStringList,
+                Title: book.details.title,
+                Description: book.details.description,
+                Year: publishedDate.Year,
+                ImageUrl: book.thumbnail_url);
         }
     }
 }

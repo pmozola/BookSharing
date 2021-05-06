@@ -1,5 +1,4 @@
-﻿// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 public class TableOfContent
@@ -102,7 +101,7 @@ public class Details
     public LastModified last_modified { get; set; }
 }
 
-public class Root
+public class OpenLibraryBookApiResponse 
 {
     public string bib_key { get; set; }
     public string info_url { get; set; }
