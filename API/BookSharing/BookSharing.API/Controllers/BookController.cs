@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookSharing.Application.QueryHandlers.Books;
 using MediatR;
 using BookSharing.Domain.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookSharing.API.Controllers
 {
@@ -19,6 +20,7 @@ namespace BookSharing.API.Controllers
             _sender = sender;
         }
 
+        [Authorize]
         [HttpGet("{isbn}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookInformationResource))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -21,7 +21,10 @@ using BookSharing.API.BackgroundTasks;
 using Microsoft.AspNetCore.SignalR;
 using BookSharing.API.SingnalRHubs;
 using BookSharing.Domain.UserWantedAggregate;
-using BookSharing.Infrastructure.BookApi.OpenLibrary;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BookSharing.API
 {
@@ -41,22 +44,56 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
-            //services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
 
-            services.AddTransient<IExternalBookApiProvider, OpenLibraryProvider>();
+            // auth
+            services.AddDbContext<AuthDbContext>(options => options.UseInMemoryDatabase("AuthDatabase"));
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<AuthDbContext>()
+                .AddDefaultTokenProviders();
 
-            //services.AddRefitClient<IGoogleBookApiClient>()
-            //    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
 
-            services.AddRefitClient<IOpenLibraryApiClient>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("OpenLibraryBookApi")));
+            services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
+
+            //services.AddTransient<IExternalBookApiProvider, OpenLibraryProvider>();
+
+            services.AddRefitClient<IGoogleBookApiClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
+
+            //services.AddRefitClient<IOpenLibraryApiClient>()
+            //    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("OpenLibraryBookApi")));
 
             services.AddTransient<IUserBookRepository, UserBookRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUserWantedRepository, UserWantedRepository>();
 
             services.AddTransient<IUserContext, FakeHttpUserContext>();
-            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = "YourApplication",
+                        ValidIssuer = "YourApplication",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yourSecretHashyourSecretHashyourSecretHash"))
+                    };
+                });
 
             services.AddHostedService<OutboxMessageBackgroundTask>();
 
@@ -69,6 +106,31 @@ namespace BookSharing.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookSharing.API", Version = "v1" });
+                OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+                {
+                    Name = "Bearer",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Description = "Specify the authorization token.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                };
+                c.AddSecurityDefinition("jwt_auth", securityDefinition);
+
+                // Make sure swagger UI requires a Bearer token specified
+                OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Id = "jwt_auth",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+{
+    {securityScheme, Array.Empty<string>()},
+};
+                c.AddSecurityRequirement(securityRequirements);
             });
         }
 
@@ -89,6 +151,7 @@ namespace BookSharing.API
                .SetIsOriginAllowed(origin => true)
                .AllowCredentials());
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
