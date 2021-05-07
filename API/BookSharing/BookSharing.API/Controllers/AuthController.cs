@@ -65,12 +65,6 @@ namespace BookSharing.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationModel model)
         {
-
-            if (model.Password != model.ConfirmPassword)
-            {
-                return new BadRequestObjectResult("Passwords do no match");
-            }
-
             if (await userManager.FindByNameAsync(model.UserName) is not null)
             {
                 return new BadRequestObjectResult("Username is taken");
@@ -97,7 +91,6 @@ namespace BookSharing.API.Controllers
         (
             [Required(ErrorMessage = "User name is required!")] string UserName,
             [Required(ErrorMessage = "Password is required!")] string Password,
-            [Required(ErrorMessage = "Confirm password is required!")] string ConfirmPassword,
             [Required(ErrorMessage = "Email is required!")] string Email
         );
         public record TokenDetails

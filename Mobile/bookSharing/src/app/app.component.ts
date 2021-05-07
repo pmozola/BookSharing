@@ -17,4 +17,6 @@ export class AppComponent {
   ];
   public labels = ['Labelka 1', 'Labelka 2', 'Labelka 3'];
   constructor() { }
+
+  logOut(){}
 }

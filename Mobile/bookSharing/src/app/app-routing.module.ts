@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth/auth.guard';
 import { FirstTimeGuard } from './guards/first-time/first-time.guard';
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    canActivate: [FirstTimeGuard]
+    canActivate: [FirstTimeGuard, AuthGuard]
   },
   {
     path: 'add-book',
@@ -43,10 +44,15 @@ const routes: Routes = [
   },
   {
     path: 'bookAdded',
-    loadChildren: () => import('./book-added-successfully/book-added-successfully.module').then( m => m.BookAddedSuccessfullyPageModule)
-  },  {
+    loadChildren: () => import('./book-added-successfully/book-added-successfully.module').then(m => m.BookAddedSuccessfullyPageModule)
+  },
+  {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
   }
 
 ];

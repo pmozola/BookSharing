@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-content>
+    <form [formGroup]="form">
+      <fieldset>
+          <legend>Login</legend>
+          <div class="form-field">
+            <label>Nazwa Uzytkownika:</label>
+            <input name="username" formControlName="username">
+        </div>
+          <div class="form-field">
+              <label>Email:</label>
+              <input name="email" formControlName="email">
+          </div>
+          <div class="form-field">
+              <label>Hasło:</label>
+              <input name="password" formControlName="password" 
+                     type="password">
+          </div>
+      </fieldset>
+      <div class="form-buttons">
+          <button class="button button-primary" 
+                  (click)="register()">Zarejestruj</button>
+      </div>
+  </form>
+</ion-content>

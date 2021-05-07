@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { tap } from 'rxjs/operators';
+import { concatMap, tap } from 'rxjs/operators';
 
-import * as moment from "moment";
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,21 +12,27 @@ export class AuthService {
 
     constructor(private http: HttpClient) {
     }
+
     private bookApiUrl: string = environment.booksharingApi + '/Auth/';
+
     login(userName: string, password: string) {
-        return this.http.post<User>(this.bookApiUrl +'login', { userName, password })
+        return this.http.post<User>(this.bookApiUrl + 'login', { userName, password })
             .pipe(tap(val => this.setSession(val)))
         // this is just the HTTP call, 
         // we still need to handle the reception of the token
 
     }
 
-    private setSession(authResult) {
-        console.log(authResult);
-        const expiresAt = moment().add(authResult.expiration, 'second');
+    registerAndLogin(email: string, userName: string, password: string) {
+        return this.http.post<any>(this.bookApiUrl + 'register', { userName, email, password })
+            .pipe(
+                concatMap(_ => this.login(userName, password))
+            )
+    }
 
+    private setSession(authResult) {
         localStorage.setItem('id_token', authResult.token);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+        localStorage.setItem("expires_at", authResult.expiration);
     }
 
     logout() {
@@ -36,7 +41,10 @@ export class AuthService {
     }
 
     public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+        var isDateValid = new Date() < this.getExpiration()
+        
+
+        return isDateValid
     }
 
     isLoggedOut() {
@@ -45,7 +53,7 @@ export class AuthService {
 
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration);
-        return moment(expiresAt);
+        console.log(expiration)
+        return  new Date(expiration);
     }
 }
