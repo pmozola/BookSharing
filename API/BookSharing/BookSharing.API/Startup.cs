@@ -16,7 +16,6 @@ using BookSharing.Application.Interface;
 using BookSharing.API.Infrastructure;
 using Refit;
 using BookSharing.Domain.BookAggregate;
-using BookSharing.Infrastructure.BookApi.Google;
 using BookSharing.API.BackgroundTasks;
 using Microsoft.AspNetCore.SignalR;
 using BookSharing.API.SingnalRHubs;
@@ -41,16 +40,15 @@ namespace BookSharing.API
 
             services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
             services.AddScoped<BookSharingDbContext>();
-            //services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
+            // services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
 
             services.AddTransient<IExternalBookApiProvider, OpenLibraryProvider>();
 
-            //services.AddRefitClient<IGoogleBookApiClient>()
+            // services.AddRefitClient<IGoogleBookApiClient>()
             //    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
 
             services.AddRefitClient<IOpenLibraryApiClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("OpenLibraryBookApi")));
-
             services.AddTransient<IUserBookRepository, UserBookRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUserWantedRepository, UserWantedRepository>();
