@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
+using System;
 using System.Collections.Generic;
 
 public class TableOfContent
@@ -88,7 +89,6 @@ public class Details
     public string pagination { get; set; }
     public Classifications classifications { get; set; }
     public List<string> lccn { get; set; }
-    public string notes { get; set; }
     public Identifiers identifiers { get; set; }
     public List<string> isbn_13 { get; set; }
     public List<string> dewey_decimal_class { get; set; }
@@ -101,7 +101,8 @@ public class Details
     public LastModified last_modified { get; set; }
 }
 
-public class OpenLibraryBookApiResponse 
+
+public class OpenLibraryBookResponse
 {
     public string bib_key { get; set; }
     public string info_url { get; set; }
@@ -111,5 +112,9 @@ public class OpenLibraryBookApiResponse
     public Details details { get; set; }
 }
 
-
+//public class Root
+//{
+//    [JsonProperty("ISBN:9780980200447")]
+//    public ISBN9780980200447 ISBN9780980200447 { get; set; }
+//}
 

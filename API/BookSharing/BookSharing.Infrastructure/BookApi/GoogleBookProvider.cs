@@ -1,6 +1,5 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
-
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.Google;
 
@@ -32,6 +31,11 @@ namespace BookSharing.Infrastructure.BookApi
                 Description: books.First().volumeInfo.description,
                 Year: int.TryParse(books.First().volumeInfo.publishedDate, out int publishedDate) ? publishedDate : 1900,
                 ImageUrl: books.First().volumeInfo.imageLinks?.thumbnail);
+        }
+
+        public Task<BookShortInformation> GetBook(string title)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
