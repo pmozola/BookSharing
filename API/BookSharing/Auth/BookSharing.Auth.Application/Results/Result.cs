@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BookSharing.Application.Results
+namespace BookSharing.Auth.Application.Results
 {
     public class Result
     {

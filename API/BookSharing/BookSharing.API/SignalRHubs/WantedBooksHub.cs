@@ -2,7 +2,7 @@
 using BookSharing.Application.Interface;
 using Microsoft.AspNetCore.SignalR;
 
-namespace BookSharing.API.SingnalRHubs
+namespace BookSharing.API.SignalRHubs
 {
     public class WantedBooksHub : Hub
     {
@@ -12,11 +12,11 @@ namespace BookSharing.API.SingnalRHubs
         }
     }
 
-    public class WantedBookRealTimeNotifcation : IWantedBookRealTimeNotifcation
+    public class WantedBookRealTimeNotification : IWantedBookRealTimeNotification
     {
         private readonly IHubContext<WantedBooksHub> _hubContext;
 
-        public WantedBookRealTimeNotifcation(IHubContext<WantedBooksHub> hubContext)
+        public WantedBookRealTimeNotification(IHubContext<WantedBooksHub> hubContext)
         {
             _hubContext = hubContext;
         }

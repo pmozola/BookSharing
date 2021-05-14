@@ -17,20 +17,20 @@ namespace BookSharing.Infrastructure.BookApi
         {
             var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
-            var books = bookResourceList?.items?.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
+            var book = bookResourceList?.items?.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString())).FirstOrDefault();
             
-            if (books == null || !books.Any())
+            if (book == null)
             {
                 return null;
             }
-
+            
             return new BookShortInformation(
                 Isbn: isbn,
-                Autor: books.First().volumeInfo.authors,
-                Title: books.First().volumeInfo.title,
-                Description: books.First().volumeInfo.description,
-                Year: int.TryParse(books.First().volumeInfo.publishedDate, out int publishedDate) ? publishedDate : 1900,
-                ImageUrl: books.First().volumeInfo.imageLinks?.thumbnail);
+                Autor: book.volumeInfo.authors,
+                Title: book.volumeInfo.title,
+                Description: book.volumeInfo.description,
+                Year: int.TryParse(book.volumeInfo.publishedDate, out var publishedDate) ? publishedDate : 1900,
+                ImageUrl: book.volumeInfo.imageLinks?.thumbnail);
         }
 
         public Task<BookShortInformation> GetBook(string title)

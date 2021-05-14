@@ -27,7 +27,7 @@ namespace BookSharing.Infrastructure.BookApi
                 return null;
             }
 
-            var book = JObject.Parse(responseString)?.Properties()?.First()?.Value?.ToObject<OpenLibraryBookResponse>();
+            var book = JObject.Parse(responseString).Properties().First().Value.ToObject<OpenLibraryBookResponse>();
 
 
             if (book == null)

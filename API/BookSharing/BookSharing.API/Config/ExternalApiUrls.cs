@@ -1,4 +1,4 @@
-﻿namespace BookSharing.API
+﻿namespace BookSharing.API.Config
 {
     public class ExternalApiUrls
     {

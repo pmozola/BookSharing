@@ -1,10 +1,13 @@
-﻿// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
-using System;
+﻿using System;
 using System.Collections.Generic;
 
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1050 // Declare types in namespaces
 public class TableOfContent
 {
+
     public int level { get; set; }
+
     public string label { get; set; }
     public string title { get; set; }
     public string pagenum { get; set; }
@@ -111,10 +114,5 @@ public class OpenLibraryBookResponse
     public string thumbnail_url { get; set; }
     public Details details { get; set; }
 }
-
-//public class Root
-//{
-//    [JsonProperty("ISBN:9780980200447")]
-//    public ISBN9780980200447 ISBN9780980200447 { get; set; }
-//}
-
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore CA1050 // Declare types in namespaces

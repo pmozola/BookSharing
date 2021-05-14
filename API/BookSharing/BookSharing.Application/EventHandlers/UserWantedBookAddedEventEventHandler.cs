@@ -14,12 +14,12 @@ namespace BookSharing.Application.EventHandlers
     {
         private readonly ILogger<BookAddedToUserLibraryEventHandler> _logger;
         private readonly BookSharingDbContext _dbContext;
-        private readonly IWantedBookRealTimeNotifcation _realTimeNotification;
+        private readonly IWantedBookRealTimeNotification _realTimeNotification;
 
         public BookAddedToUserLibraryEventHandler(
             ILogger<BookAddedToUserLibraryEventHandler> logger,
             BookSharingDbContext dbContext,
-            IWantedBookRealTimeNotifcation realTimeNotification)
+            IWantedBookRealTimeNotification realTimeNotification)
         {
             _logger = logger;
             _dbContext = dbContext;
@@ -39,7 +39,7 @@ namespace BookSharing.Application.EventHandlers
 
             foreach (var wantedBook in wantedBooks)
             {
-                _logger.LogInformation($"Notification for user { wantedBook.UserId}: book {wantedBook.ISBN} is now avabile for book sharing");
+                _logger.LogInformation($"Notification for user { wantedBook.UserId}: book {wantedBook.ISBN} is now available for book sharing");
                 await _realTimeNotification.SendMessage(wantedBook.UserId, wantedBook.ISBN.ToString(), wantedBook.Title);
             }
         }

@@ -20,7 +20,7 @@ namespace BookSharing.Application.QueryHandlers.Books
 
         async Task<Result<BookInformationResource>> IRequestHandler<GetBookQuery, Result<BookInformationResource>>.Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
-            var book = await _repository.GetAsync(request.ISBN, cancellationToken);
+            var book = await _repository.GetAsync(request.Isbn, cancellationToken);
             if (book != null)
             {
                 return Result<BookInformationResource>.Success(
@@ -28,7 +28,7 @@ namespace BookSharing.Application.QueryHandlers.Books
 
             }
 
-            var externalBookInformation = await _bookInformationProvider.GetBook(request.ISBN);
+            var externalBookInformation = await _bookInformationProvider.GetBook(request.Isbn);
             if (externalBookInformation != null)
             {
                 return Result<BookInformationResource>.Success(
@@ -45,7 +45,7 @@ namespace BookSharing.Application.QueryHandlers.Books
         }
     }
 
-    public record GetBookQuery(long ISBN) : IRequest<Result<BookInformationResource>>;
+    public record GetBookQuery(long Isbn) : IRequest<Result<BookInformationResource>>;
 
     public record BookInformationResource(long Isbn, string Title, string Authors, string Description, int Year, string ImageUrl);
 }

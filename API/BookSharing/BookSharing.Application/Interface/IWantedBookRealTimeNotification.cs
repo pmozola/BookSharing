@@ -2,7 +2,7 @@
 
 namespace BookSharing.Application.Interface
 {
-    public interface IWantedBookRealTimeNotifcation
+    public interface IWantedBookRealTimeNotification
     {
         Task SendMessage(int userId, string isbn, string bookTitle);
     }

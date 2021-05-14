@@ -18,7 +18,7 @@ namespace BookSharing.Application.CommandHandlers.Wanted
         }
         protected override async Task Handle(RemoveBookFromUserWantedCommand request, CancellationToken cancellationToken)
         {
-            var book = await _repository.GetForUser(request.ISBN, _userContext.GetUserId(), cancellationToken);
+            var book = await _repository.GetForUser(request.Isbn, _userContext.GetUserId(), cancellationToken);
 
             if (book != null)
             {
@@ -27,5 +27,5 @@ namespace BookSharing.Application.CommandHandlers.Wanted
         }
     }
 
-    public record RemoveBookFromUserWantedCommand(long ISBN) : IRequest;
+    public record RemoveBookFromUserWantedCommand(long Isbn) : IRequest;
 }

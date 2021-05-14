@@ -12,18 +12,18 @@ namespace BookSharing.Application.EventHandlers
         INotificationHandler<BookAddedToUserLibraryEvent>,
         INotificationHandler<UserWantedBookAddedEvent>
     {
-        private readonly IExternalBookApiProvider bookProvider;
-        private readonly IBookRepository repository;
-        private readonly ILogger<AddNotExistingBookEventHandlers> logger;
+        private readonly IExternalBookApiProvider _bookProvider;
+        private readonly IBookRepository _repository;
+        private readonly ILogger<AddNotExistingBookEventHandlers> _logger;
 
         public AddNotExistingBookEventHandlers(
             IExternalBookApiProvider bookProvider,
             IBookRepository repository,
             ILogger<AddNotExistingBookEventHandlers> logger)
         {
-            this.bookProvider = bookProvider;
-            this.repository = repository;
-            this.logger = logger;
+            _bookProvider = bookProvider;
+            _repository = repository;
+            _logger = logger;
         }
 
         public async Task Handle(BookAddedToUserLibraryEvent notification, CancellationToken cancellationToken)
@@ -38,21 +38,21 @@ namespace BookSharing.Application.EventHandlers
 
         public async Task AddNotExistingBook(int userId, long isbn, CancellationToken cancellationToken)
         {
-            if (await repository.IsExistAsync(isbn, cancellationToken))
+            if (await _repository.IsExistAsync(isbn, cancellationToken))
             {
                 return;
             }
 
-            var book = await this.bookProvider.GetBook(isbn);
+            var book = await _bookProvider.GetBook(isbn);
 
             if (book == null)
             {
-                logger.LogError($"Cannot find book with isbn: {isbn} added by user: {userId}");
+                _logger.LogError($"Cannot find book with isbn: {isbn} added by user: {userId}");
                 
                 return;
             }
 
-            await repository.AddAsync(new Book(book.Isbn, book.Title, string.Join(", ", book.Autor), book.Year, book.Description, book.ImageUrl), cancellationToken);
+            await _repository.AddAsync(new Book(book.Isbn, book.Title, string.Join(", ", book.Autor), book.Year, book.Description, book.ImageUrl), cancellationToken);
         }
     }
 }

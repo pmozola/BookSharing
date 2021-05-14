@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-using BookSharing.API.Extensions;
-using BookSharing.API.Extensions.Migrators;
+using BookSharing.Auth.Application.UserSeed;
+using BookSharing.Infrastructure.SeedData;
 
 namespace BookSharing.API
 {

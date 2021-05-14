@@ -1,11 +1,10 @@
 ﻿using System;
-
-using Microsoft.Extensions.DependencyInjection;
-using Refit;
 using BookSharing.Infrastructure.BookApi.Google;
 using BookSharing.Infrastructure.BookApi.OpenLibrary;
+using Microsoft.Extensions.DependencyInjection;
+using Refit;
 
-namespace BookSharing.API
+namespace BookSharing.API.Config
 {
     public static class ConfigureExternalApiClients
     {

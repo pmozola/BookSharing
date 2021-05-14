@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BookSharing.Application.CommandHandlers.Wanted;
+using BookSharing.Application.QueryHandlers.Wanted;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

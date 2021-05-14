@@ -27,7 +27,7 @@ namespace BookSharing.API.Controllers
             var result = await _sender.Send(new GetBookQuery(isbn));
 
             return result.Match<IActionResult>(
-                success: data => Ok(data),
+                success: Ok,
                 error: exception => exception switch
                 {
                     NotFoundException => NotFound(),

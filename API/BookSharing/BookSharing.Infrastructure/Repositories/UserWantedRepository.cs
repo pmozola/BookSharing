@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using BookSharing.Domain.UserWantedAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +16,11 @@ namespace BookSharing.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(UserWanted entity, CancellationToken cancelationToken)
+        public async Task AddAsync(UserWanted entity, CancellationToken cancellationToken)
         {
-            _dbContext.UserWantedBooks.Add(entity);
+            await _dbContext.UserWantedBooks.AddAsync(entity, cancellationToken);
 
-            await _dbContext.SaveChangesAsync(cancelationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task Delete(UserWanted entity, CancellationToken cancellationToken)
