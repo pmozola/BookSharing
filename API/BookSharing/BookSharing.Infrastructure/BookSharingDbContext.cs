@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-using BookSharing.Domain.BookAggregate;
-using BookSharing.Domain.UserBookAggregate;
+﻿using System;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+
+using BookSharing.Domain.BookAggregate;
+using BookSharing.Domain.UserBookAggregate;
 using BookSharing.Domain.Base;
-using System;
 using BookSharing.Infrastructure.Models;
-using Newtonsoft.Json;
 using BookSharing.Domain.UserWantedAggregate;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BookSharing.Infrastructure
 {

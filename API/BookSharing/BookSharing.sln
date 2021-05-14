@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Domain", "BookS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Infrastructure", "BookSharing.Infrastructure\BookSharing.Infrastructure.csproj", "{E76DFA1F-31BB-4231-B89B-ACCC831396BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{69585E21-D500-48D0-8D5C-832FC28DCBD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.Auth.Application", "Auth\BookSharing.Auth.Application\BookSharing.Auth.Application.csproj", "{7B148A99-7023-438F-825C-235F02BC9FCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{E76DFA1F-31BB-4231-B89B-ACCC831396BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E76DFA1F-31BB-4231-B89B-ACCC831396BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E76DFA1F-31BB-4231-B89B-ACCC831396BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B148A99-7023-438F-825C-235F02BC9FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B148A99-7023-438F-825C-235F02BC9FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B148A99-7023-438F-825C-235F02BC9FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B148A99-7023-438F-825C-235F02BC9FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,7 @@ Global
 		{61F704DA-3C36-4E56-A09D-F02E6589F69A} = {2E38A37C-68CB-4918-822F-2310B96D2574}
 		{7CE83CB0-B444-4E16-8DA0-52F4582E126F} = {2E38A37C-68CB-4918-822F-2310B96D2574}
 		{E76DFA1F-31BB-4231-B89B-ACCC831396BB} = {2E38A37C-68CB-4918-822F-2310B96D2574}
+		{7B148A99-7023-438F-825C-235F02BC9FCC} = {69585E21-D500-48D0-8D5C-832FC28DCBD6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36217ADE-AB14-422F-8095-776E25EFFBA8}

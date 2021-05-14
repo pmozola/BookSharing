@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using BookSharing.Application.QueryHandlers.Books;
 using MediatR;
 using BookSharing.Domain.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BookSharing.API.Controllers
 {

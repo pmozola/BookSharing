@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSharing.Infrastructure
+namespace BookSharing.Auth.Application.Infrastructure
 {
     public class AuthDbContext : IdentityDbContext<AppUser, AppIdentityRole, int>
     {

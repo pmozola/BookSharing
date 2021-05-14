@@ -7,16 +7,16 @@ namespace BookSharing.API.Infrastructure
 {
     public class HttpContextUser : IUserContext
     {
-        private readonly IHttpContextAccessor _contextAccesso;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public HttpContextUser(IHttpContextAccessor ctxAccessor)
         {
-            _contextAccesso = ctxAccessor;
+            _contextAccessor = ctxAccessor;
         }
 
         public int GetUserId()
         {
-            var userIdClaim = _contextAccesso.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Iat);
+            var userIdClaim = _contextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Iat);
 
             return int.Parse(userIdClaim.Value);
         }

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Auth\BookSharing.Auth.Application\BookSharing.Auth.Application.csproj" />
     <ProjectReference Include="..\BookSharing.Application\BookSharing.Application.csproj" />
     <ProjectReference Include="..\BookSharing.Domain\BookSharing.Domain.csproj" />
     <ProjectReference Include="..\BookSharing.Infrastructure\BookSharing.Infrastructure.csproj" />
