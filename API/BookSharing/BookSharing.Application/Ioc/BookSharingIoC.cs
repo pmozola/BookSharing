@@ -11,7 +11,6 @@ namespace BookSharing.Application.Ioc
     {
         public static IServiceCollection AddBookSharingServices(this IServiceCollection services)
         {
-            //services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
             services.AddTransient<IUserBookRepository, UserBookRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUserWantedRepository, UserWantedRepository>();
