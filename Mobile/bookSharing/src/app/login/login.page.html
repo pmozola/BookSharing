@@ -1,26 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content padding>
   <form [formGroup]="form">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="form-field">
-            <label>Email:</label>
-            <input name="email" formControlName="email">
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <h3>Login</h3>
+          </div>
+          <div padding>
+            <ion-item>
+              <ion-input name="email" formControlName="email" type="email" placeholder="your@email.com" required>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input name="password" formControlName="password" type="password" placeholder="Hasło" required>
+              </ion-input>
+            </ion-item>
+          </div>
+          <div padding>
+            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="login()">Login
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div text-center>
+          Jezeli jeszcze nie masz konta, prosze <a routerLink='/register'>
+            zarejestruj sie</a> !
         </div>
-        <div class="form-field">
-            <label>Password:</label>
-            <input name="password" formControlName="password" 
-                   type="password">
+      </ion-row>
+
+      <ion-row>
+        <div text-center>
+          <a routerLink='/register'>Zapmoniałem hasła</a>
         </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="login()">Login</button>
-    </div>
-</form>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
+
+<!-- <ion-content>
+
+  <fieldset>
+    <legend>Login</legend>
+    <div class="form-field">
+      <label>Email:</label>
+      <input name="email" formControlName="email">
+    </div>
+    <div class="form-field">
+      <label>Password:</label>
+      <input name="password" type="password">
+    </div>
+  </fieldset>
+  <div class="form-buttons">
+    <button class="button button-primary" (click)="login()">Login</button>
+  </div>
+  </form>
+</ion-content> -->
