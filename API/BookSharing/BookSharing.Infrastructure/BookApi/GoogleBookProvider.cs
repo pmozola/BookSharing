@@ -17,7 +17,7 @@ namespace BookSharing.Infrastructure.BookApi
         {
             var bookResourceList = await _bookApi.GetBookByISBN(isbn);
 
-            var book = bookResourceList?.items?.Where(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString())).FirstOrDefault();
+            var book = bookResourceList?.items?.FirstOrDefault(x => x.volumeInfo.industryIdentifiers.Any(x => x.identifier == isbn.ToString()));
             
             if (book == null)
             {
