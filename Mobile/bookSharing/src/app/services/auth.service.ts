@@ -15,18 +15,16 @@ export class AuthService {
 
     private bookApiUrl: string = environment.booksharingApi + '/Auth/';
 
-    login(userName: string, password: string) {
-        return this.http.post<User>(this.bookApiUrl + 'login', { userName, password })
+    login(email: string, password: string) {
+        return this.http.post<User>(this.bookApiUrl + 'login', { email, password })
             .pipe(tap(val => this.setSession(val)))
-        // this is just the HTTP call, 
-        // we still need to handle the reception of the token
 
     }
 
     registerAndLogin(email: string, userName: string, password: string) {
         return this.http.post<any>(this.bookApiUrl + 'register', { userName, email, password })
             .pipe(
-                concatMap(_ => this.login(userName, password))
+                concatMap(_ => this.login(email, password))
             )
     }
 
@@ -43,7 +41,6 @@ export class AuthService {
     public isLoggedIn() {
         var isDateValid = new Date() < this.getExpiration()
         
-
         return isDateValid
     }
 
@@ -53,7 +50,7 @@ export class AuthService {
 
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
-        console.log(expiration)
+
         return  new Date(expiration);
     }
 }

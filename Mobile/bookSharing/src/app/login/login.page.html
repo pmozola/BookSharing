@@ -1,58 +1,67 @@
-<ion-content padding>
-  <form [formGroup]="form">
-    <ion-grid>
-      <ion-row justify-content-center>
-        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div text-center>
-            <h3>Login</h3>
-          </div>
-          <div padding>
-            <ion-item>
-              <ion-input name="email" formControlName="email" type="email" placeholder="your@email.com" required>
-              </ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="password" formControlName="password" type="password" placeholder="Hasło" required>
-              </ion-input>
-            </ion-item>
-          </div>
-          <div padding>
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="login()">Login
-            </ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <div text-center>
-          Jezeli jeszcze nie masz konta, prosze <a routerLink='/register'>
-            zarejestruj sie</a> !
-        </div>
-      </ion-row>
+<ion-content>
 
-      <ion-row>
-        <div text-center>
-          <a routerLink='/register'>Zapmoniałem hasła</a>
-        </div>
-      </ion-row>
-    </ion-grid>
-  </form>
+  <ion-grid class="grid1">
+
+    <ion-row class="row1">
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row2">
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-slide>
+    <div class="contaier-login">
+      <form [formGroup]="form">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h1>Zaloguj</h1>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-list>
+                <ion-item>
+                  <ion-icon name="at" class="icon-login"></ion-icon>
+                  <ion-input name="email" type="text" required placeholder="email" formControlName="email"></ion-input>
+                </ion-item>
+                <br />
+                <ion-item>
+                  <ion-icon name="lock-closed" class="icon-login"></ion-icon>
+                  <ion-input name="password" type="password" required formControlName="password" placeholder="Hasło">
+                  </ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button type="submit" fill="solid" expand="full" (click)="login()" [disabled]="form.invalid">
+                Zaloguj
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>
+                <h3>Zapomniałem Hasła</h3>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </div>
+
+  </ion-slide>
+
+  <ion-button class="register-button" fill="solid" expand="full" (click)="navigateToRegister()">
+    Zarejestruj
+  </ion-button>
 </ion-content>
-
-<!-- <ion-content>
-
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email">
-    </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" type="password">
-    </div>
-  </fieldset>
-  <div class="form-buttons">
-    <button class="button button-primary" (click)="login()">Login</button>
-  </div>
-  </form>
-</ion-content> -->

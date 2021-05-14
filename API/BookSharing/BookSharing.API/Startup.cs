@@ -14,6 +14,7 @@ using BookSharing.Auth.Application;
 using BookSharing.Auth.Application.Config;
 using BookSharing.Application.Ioc;
 using BookSharing.Auth.Application.CommandHandlers;
+using BookSharing.API.Config;
 
 namespace BookSharing.API
 {

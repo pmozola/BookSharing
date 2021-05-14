@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -30,7 +30,6 @@ export class RegisterPage {
       this.authService.registerAndLogin(val.email, val.username, val.password)
         .subscribe(
           () => {
-            console.log("User is logged in");
             this.router.navigateByUrl('/');
           }
         );
