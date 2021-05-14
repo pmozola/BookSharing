@@ -50,7 +50,6 @@ namespace BookSharing.API.Infrastructure
         {
             if (isEnabled)
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookSharing.API v1"));
             }

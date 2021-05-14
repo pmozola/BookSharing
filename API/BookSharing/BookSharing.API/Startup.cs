@@ -15,6 +15,7 @@ using BookSharing.Auth.Application.Config;
 using BookSharing.Application.Ioc;
 using BookSharing.Auth.Application.CommandHandlers;
 using BookSharing.Application.Interface;
+using BookSharing.API.Extensions;
 
 namespace BookSharing.API
 {
@@ -44,6 +45,7 @@ namespace BookSharing.API
 
             services.Configure<ExternalApiUrls>(options => Configuration.GetSection("ExternalApiUrls").Bind(options));
             services.Configure<AuthSettings>(options => Configuration.GetSection("Auth").Bind(options));
+            services.Configure<TestUsersConfig>(options => Configuration.GetSection("TestUsers").Bind(options));
 
             services.AddBookShareAuthorization(authSettings);
 

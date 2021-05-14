@@ -37,7 +37,7 @@ namespace BookSharing.Infrastructure.BookApi
 
             List<string> authors = book.details.authors != null ? book.details.authors.Select(x => x.name.ToString()).ToList() : new List<string>();
 
-            DateTime.TryParse(book.details.publish_date, out DateTime publishedDate);
+            _ = DateTime.TryParse(book.details.publish_date, out DateTime publishedDate);
 
             return new BookShortInformation(
                 Isbn: isbn,
