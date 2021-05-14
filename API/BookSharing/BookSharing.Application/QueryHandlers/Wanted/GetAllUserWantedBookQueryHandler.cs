@@ -1,13 +1,12 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using BookSharing.Application.Interface;
-using MediatR;
 using BookSharing.Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSharing.Application.CommandHandlers.Wanted
+namespace BookSharing.Application.QueryHandlers.Wanted
 {
     public class GetAllUserWantedBookQueryHandler : IRequestHandler<GetAllUserWantedBookQuery, UserWantedBookResource[]>
     {
@@ -33,6 +32,6 @@ namespace BookSharing.Application.CommandHandlers.Wanted
         }
     }
 
-    public record GetAllUserWantedBookQuery() : IRequest<UserWantedBookResource[]>;
+    public record GetAllUserWantedBookQuery : IRequest<UserWantedBookResource[]>;
     public record UserWantedBookResource(int Id, string Title, string ImageUrl);
 }

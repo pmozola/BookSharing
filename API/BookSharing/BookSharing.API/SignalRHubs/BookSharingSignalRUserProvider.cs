@@ -1,7 +1,7 @@
 ﻿using BookSharing.Application.Interface;
 using Microsoft.AspNetCore.SignalR;
 
-namespace BookSharing.API.SingnalRHubs
+namespace BookSharing.API.SignalRHubs
 {
     public class BookSharingSignalRUserProvider : IUserIdProvider
     {

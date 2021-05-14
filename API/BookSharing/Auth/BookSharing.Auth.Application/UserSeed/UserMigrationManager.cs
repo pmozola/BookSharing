@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BookSharing.Auth.Application;
 using BookSharing.Auth.Application.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace BookSharing.API.Extensions
+namespace BookSharing.Auth.Application.UserSeed
 {
     public static class UserMigrationManager
     {

@@ -32,6 +32,6 @@ namespace BookSharing.Application.QueryHandlers.UserLibrary
         }
     }
 
-    public record GetAllUserBooksQuery() : IRequest<UserBookShortInformation[]>;
+    public record GetAllUserBooksQuery : IRequest<UserBookShortInformation[]>;
     public record UserBookShortInformation(int Id, string Title, string ImageUrl, bool IsAnyConversation);
 }

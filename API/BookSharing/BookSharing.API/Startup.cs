@@ -9,13 +9,14 @@ using MediatR;
 using BookSharing.Application.QueryHandlers.UserLibrary;
 using BookSharing.API.Infrastructure;
 using BookSharing.API.BackgroundTasks;
-using BookSharing.API.SingnalRHubs;
+using BookSharing.API.Config;
+using BookSharing.API.SignalRHubs;
 using BookSharing.Auth.Application;
 using BookSharing.Auth.Application.Config;
 using BookSharing.Application.Ioc;
 using BookSharing.Auth.Application.CommandHandlers;
 using BookSharing.Application.Interface;
-using BookSharing.API.Extensions;
+using BookSharing.Auth.Application.UserSeed;
 
 namespace BookSharing.API
 {
@@ -70,7 +71,7 @@ namespace BookSharing.API
             app.UseCors(x => x
                .AllowAnyMethod()
                .AllowAnyHeader()
-               .SetIsOriginAllowed(origin => true)
+               .SetIsOriginAllowed(_ => true)
                .AllowCredentials());
 
             app.UseAuthentication();
@@ -85,7 +86,7 @@ namespace BookSharing.API
 
         private bool IsSwaggerEnabled(IWebHostEnvironment env)
         {
-            return env.IsDevelopment() || Configuration.GetValue<bool>("EnabbleSwaggerInProduction");
+            return env.IsDevelopment() || Configuration.GetValue<bool>("EnableSwaggerInProduction");
         }
 
         private AuthSettings GetAuthSettings()

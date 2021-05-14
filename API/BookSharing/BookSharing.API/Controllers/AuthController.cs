@@ -26,7 +26,7 @@ namespace BookSharing.API.Controllers
             var result = await _sender.Send(command);
             
             return result.Match<IActionResult>(
-                success: token => Ok(token),
+                success: Ok,
                 error: exception => exception switch
                 {
                     ArgumentException ex => BadRequest(ex.Message),

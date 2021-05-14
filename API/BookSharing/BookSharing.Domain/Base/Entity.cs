@@ -10,14 +10,8 @@ namespace BookSharing.Domain.Base
         int _Id;
         public virtual int Id
         {
-            get
-            {
-                return _Id;
-            }
-            protected set
-            {
-                _Id = value;
-            }
+            get => _Id;
+            protected set => _Id = value;
         }
 
         private List<INotification> _domainEvents;

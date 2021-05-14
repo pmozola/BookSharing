@@ -4,7 +4,6 @@ using System.Collections.Generic;
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1050 // Declare types in namespaces
 public class TableOfContent
-
 {
 
     public int level { get; set; }

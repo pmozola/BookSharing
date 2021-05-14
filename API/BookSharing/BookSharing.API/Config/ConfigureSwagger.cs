@@ -1,10 +1,9 @@
 ﻿using System;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace BookSharing.API.Infrastructure
+namespace BookSharing.API.Config
 {
     public static class ConfigureSwagger
     {

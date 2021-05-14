@@ -34,13 +34,13 @@ namespace BookSharing.API.BackgroundTasks
                 {
                     using var scope = _services.CreateScope();
 
-                    var context = scope.ServiceProvider.GetService<BookSharingDbContext>();
-                    var publisher = scope.ServiceProvider.GetService<IPublisher>();
+                    var context = scope.ServiceProvider.GetRequiredService<BookSharingDbContext>();
+                    var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
                     var messages = context.OutboxMessages.ToList();
 
                     foreach (var message in messages)
                     {
-                        var type = Assembly.GetAssembly(typeof(Book)).GetType(message.Type);
+                        var type = Assembly.GetAssembly(typeof(Book))?.GetType(message.Type);
                         var notification = JsonConvert.DeserializeObject(message.Data, type);
 
                         await publisher.Publish((INotification)notification, stoppingToken);

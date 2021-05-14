@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BookSharing.API.SignalRHubs;
 using BookSharing.Application.Interface;
 using Microsoft.AspNetCore.SignalR;
-using BookSharing.API.SingnalRHubs;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BookSharing.API
+namespace BookSharing.API.Config
 {
     public static class ConfigureBookShareSignalR
     {
@@ -11,7 +11,7 @@ namespace BookSharing.API
         {
             services.AddSignalR();
             services.AddSingleton<IUserIdProvider, BookSharingSignalRUserProvider>();
-            services.AddTransient<IWantedBookRealTimeNotifcation, WantedBookRealTimeNotifcation>();
+            services.AddTransient<IWantedBookRealTimeNotification, WantedBookRealTimeNotification>();
 
             return services;
         }
