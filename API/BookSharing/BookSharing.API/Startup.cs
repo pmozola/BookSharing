@@ -14,7 +14,7 @@ using BookSharing.Auth.Application;
 using BookSharing.Auth.Application.Config;
 using BookSharing.Application.Ioc;
 using BookSharing.Auth.Application.CommandHandlers;
-using BookSharing.API.Config;
+using BookSharing.Application.Interface;
 
 namespace BookSharing.API
 {
@@ -42,7 +42,6 @@ namespace BookSharing.API
 
             services.AddBookSharingSignalR();
 
-            services.ConfigureUserContext(authSettings);
             services.Configure<ExternalApiUrls>(options => Configuration.GetSection("ExternalApiUrls").Bind(options));
             services.Configure<AuthSettings>(options => Configuration.GetSection("Auth").Bind(options));
 
@@ -55,6 +54,7 @@ namespace BookSharing.API
             services.AddMediatR(typeof(GetAllUserBooksQuery));
             services.AddMediatR(typeof(LoginUserCommand));
             services.AddHttpContextAccessor();
+            services.AddTransient<IUserContext, HttpContextUser>();
 
             services.AddBookSharingSwagger();
         }

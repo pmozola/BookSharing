@@ -30,11 +30,6 @@ namespace BookSharing.Auth.Application.Config
 
         public static IServiceCollection AddBookShareAuthorization(this IServiceCollection services, AuthSettings settings)
         {
-            if (!settings.IsEnabled)
-            {
-                return services;
-            }
-
             services
                 .AddAuthentication(options =>
                     {

@@ -12,7 +12,7 @@ namespace BookSharing.API.Extensions
 {
     public static class UserMigrationManager
     {
-        private const string password = "BooksSharing123";
+        private const string password = "Test1234";
         public static IHost MigrateUser(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -46,8 +46,8 @@ namespace BookSharing.API.Extensions
 
         private static IEnumerable<UserToSeed> GetDefaultUsers()
         {
-            yield return new UserToSeed("pmozola", "pmozola@booksharingtest.com");
-            yield return new UserToSeed("akasperiewicz", "akasperiewicz@booksharingtest.com");
+            yield return new UserToSeed("pmozola", "pmoz@test.com");
+            yield return new UserToSeed("akasperiewicz", "akas@test.com");
         }
 
         private record UserToSeed(string Username, string Email);
