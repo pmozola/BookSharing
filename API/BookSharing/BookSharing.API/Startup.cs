@@ -1,26 +1,20 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using BookSharing.Infrastructure;
-using BookSharing.Infrastructure.BookApi;
 using MediatR;
 using BookSharing.Application.QueryHandlers.UserLibrary;
-using BookSharing.Infrastructure.Repositories;
-using BookSharing.Domain.UserBookAggregate;
-using BookSharing.Application.Interface;
 using BookSharing.API.Infrastructure;
-using Refit;
-using BookSharing.Domain.BookAggregate;
 using BookSharing.API.BackgroundTasks;
-using Microsoft.AspNetCore.SignalR;
 using BookSharing.API.SingnalRHubs;
-using BookSharing.Domain.UserWantedAggregate;
-using BookSharing.Infrastructure.BookApi.OpenLibrary;
+using BookSharing.Auth.Application;
+using BookSharing.Auth.Application.Config;
+using BookSharing.Application.Ioc;
+using BookSharing.Auth.Application.CommandHandlers;
+using BookSharing.Application.Interface;
 
 namespace BookSharing.API
 {
@@ -35,49 +29,39 @@ namespace BookSharing.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var authSettings = GetAuthSettings();
+
             services.AddCors();
             services.AddControllers();
 
-            services.AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"));
-            services.AddScoped<BookSharingDbContext>();
-            // services.AddTransient<IExternalBookApiProvider, GoogleBookProvider>();
+            services
+                .AddDbContext<BookSharingDbContext>(x => x.UseInMemoryDatabase(databaseName: "BookSharingDatabase"))
+                .AddScoped<BookSharingDbContext>();
 
-            services.AddTransient<IExternalBookApiProvider, OpenLibraryProvider>();
+            services.AddBookShareIdentity();
 
-            // services.AddRefitClient<IGoogleBookApiClient>()
-            //    .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("GoogleBookApi")));
+            services.AddBookSharingSignalR();
 
-            services.AddRefitClient<IOpenLibraryApiClient>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetValue<string>("OpenLibraryBookApi")));
-            services.AddTransient<IUserBookRepository, UserBookRepository>();
-            services.AddTransient<IBookRepository, BookRepository>();
-            services.AddTransient<IUserWantedRepository, UserWantedRepository>();
+            services.Configure<ExternalApiUrls>(options => Configuration.GetSection("ExternalApiUrls").Bind(options));
+            services.Configure<AuthSettings>(options => Configuration.GetSection("Auth").Bind(options));
 
-            services.AddTransient<IUserContext, FakeHttpUserContext>();
-            
+            services.AddBookShareAuthorization(authSettings);
 
+            services.AddExternalApiClients(Configuration.GetSection("ExternalApiUrls").Get<ExternalApiUrls>());
             services.AddHostedService<OutboxMessageBackgroundTask>();
 
-            services.AddSignalR();
-            services.AddSingleton<IUserIdProvider, BookSharingSignalRUserProvider>();
-            services.AddTransient<IWantedBookRealTimeNotifcation, WantedBookRealTimeNotifcation>();
-
+            services.AddBookSharingServices();
             services.AddMediatR(typeof(GetAllUserBooksQuery));
+            services.AddMediatR(typeof(LoginUserCommand));
+            services.AddHttpContextAccessor();
+            services.AddTransient<IUserContext, HttpContextUser>();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookSharing.API", Version = "v1" });
-            });
+            services.AddBookSharingSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (IsSwaggerEnabled(env))
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookSharing.API v1"));
-            }
+            app.UseBookShareSwagger(IsSwaggerEnabled(env));
 
             app.UseRouting();
 
@@ -87,17 +71,24 @@ namespace BookSharing.API
                .SetIsOriginAllowed(origin => true)
                .AllowCredentials());
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
                 endpoints.MapHub<WantedBooksHub>("/wantedBookHub");
             });
         }
+
         private bool IsSwaggerEnabled(IWebHostEnvironment env)
         {
             return env.IsDevelopment() || Configuration.GetValue<bool>("EnabbleSwaggerInProduction");
+        }
+
+        private AuthSettings GetAuthSettings()
+        {
+            return Configuration.GetSection("Auth").Get<AuthSettings>();
         }
     }
 }

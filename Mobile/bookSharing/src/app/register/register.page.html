@@ -1,0 +1,63 @@
+<ion-content>
+
+  <ion-grid class="grid1">
+
+    <ion-row class="row1">
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row2">
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-slide>
+    <div class="contaier-login">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h1>Zarejestruj</h1>
+          </ion-col>
+        </ion-row>
+        <form [formGroup]="form">
+          <ion-row>
+            <ion-col>
+              <ion-list>
+                <ion-item>
+                  <ion-icon name="person" class="icon-login"></ion-icon>
+                  <ion-input name="user" type="text" required formControlName="username"
+                    placeholder="Nazwa uzytkownika"></ion-input>
+                </ion-item>
+                <br />
+                <ion-item>
+                  <ion-icon name="at" class="icon-login"></ion-icon>
+                  <ion-input name="email" type="email" required formControlName="email" placeholder="Email"></ion-input>
+                </ion-item>
+                <br />
+                <ion-item>
+                  <ion-icon name="lock-closed" class="icon-login"></ion-icon>
+                  <ion-input name="password" type="password" formControlName="password" required placeholder="Hasło">
+                  </ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </form>
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" fill="solid" expand="full" [disabled]="form.invalid" (click)="register()">
+              Zarejestruj
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </ion-slide>
+
+</ion-content>
