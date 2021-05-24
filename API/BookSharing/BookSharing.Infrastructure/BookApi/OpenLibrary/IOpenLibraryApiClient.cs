@@ -5,7 +5,9 @@ namespace BookSharing.Infrastructure.BookApi.OpenLibrary
 {
     public interface IOpenLibraryApiClient
     {
-        [Get("/books?bibkeys=ISBN:{isbn}&jscmd=details&format=json")]
+        [Get("/api/books?bibkeys=ISBN:{isbn}&jscmd=details&format=json")]
         Task<string> GetBookByIsbnFromOpenLibraryApi(long isbn);
+        [Get("/search.json?title={title}")]
+        Task<string> GetBookByTitleFromOpenLibraryApi(string title);
     }
 }

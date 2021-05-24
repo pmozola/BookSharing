@@ -30,6 +30,11 @@ namespace BookSharing.Infrastructure.Repositories
             return _dbContext.Books.Where(x => x.ISBN == isbn).FirstOrDefaultAsync(cancellationToken);
         }
 
+        public Task<Book> GetAsyncByTitle(string title, CancellationToken cancellationToken)
+        {
+            return _dbContext.Books.Where(x => x.Title == title).FirstOrDefaultAsync(cancellationToken);
+        }
+
         public Task<bool> IsExistAsync(long isbn, CancellationToken cancellationToken)
         {
             return _dbContext.Books.Where(x => x.ISBN == isbn).AnyAsync(cancellationToken);

@@ -34,5 +34,21 @@ namespace BookSharing.API.Controllers
                     _ => StatusCode(StatusCodes.Status500InternalServerError)
                 });
         }
+
+        [HttpGet("GetByTitle/{title}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookInformationResource))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByTitle(string title)
+        {
+            var result = await _sender.Send(new GetBookQueryByTitle(title));
+
+            return result.Match<IActionResult>(
+                success: data => Ok(data),
+                error: exception => exception switch
+                {
+                    NotFoundException => NotFound(),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError)
+                });
+        }
     }
 }

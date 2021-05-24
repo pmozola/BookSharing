@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
 using BookSharing.Domain.BookAggregate;
 using BookSharing.Infrastructure.BookApi.OpenLibrary;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace BookSharing.Infrastructure.BookApi
@@ -29,7 +30,6 @@ namespace BookSharing.Infrastructure.BookApi
 
             var book = JObject.Parse(responseString)?.Properties()?.First()?.Value?.ToObject<OpenLibraryBookResponse>();
 
-
             if (book == null)
             {
                 return null;
@@ -46,12 +46,31 @@ namespace BookSharing.Infrastructure.BookApi
                 Description: book.details.description,
                 Year: publishedDate.Year,
                 ImageUrl: book.thumbnail_url);
-
         }
 
-        public Task<BookShortInformation> GetBook(string title)
+        public async Task<BookShortInformation> GetBookByTitle(string title)
         {
-            throw new NotImplementedException();
+            var responseString = await _openLibraryApi.GetBookByTitleFromOpenLibraryApi(title);
+
+            if (!IsResponseValid(responseString))
+            {
+                return null;
+            }
+
+            var book = JObject.Parse(responseString)?.Properties()?.First()?.Value?.ToObject<OpenLibraryBookResponseByTitle>();
+
+            if (book == null)
+            {
+                return null;
+            }
+
+            return new BookShortInformation(
+               Isbn: book.docs.isbn.First(),
+               Autor: book.docs.author_name,
+               Title: book.docs.title,
+               Description: book.docs.text.First(),
+               Year: book.docs.first_publish_year,
+               ImageUrl: book.docs.key);
         }
 
         public static bool IsResponseValid(string response)

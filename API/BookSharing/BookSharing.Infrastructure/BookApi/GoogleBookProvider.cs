@@ -33,7 +33,7 @@ namespace BookSharing.Infrastructure.BookApi
                 ImageUrl: books.First().volumeInfo.imageLinks?.thumbnail);
         }
 
-        public Task<BookShortInformation> GetBook(string title)
+        public Task<BookShortInformation> GetBookByTitle(string title)
         {
             throw new System.NotImplementedException();
         }
