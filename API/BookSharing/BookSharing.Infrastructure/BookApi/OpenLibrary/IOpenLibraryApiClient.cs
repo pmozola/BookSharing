@@ -8,6 +8,6 @@ namespace BookSharing.Infrastructure.BookApi.OpenLibrary
         [Get("/api/books?bibkeys=ISBN:{isbn}&jscmd=details&format=json")]
         Task<string> GetBookByIsbnFromOpenLibraryApi(long isbn);
         [Get("/search.json?title={title}")]
-        Task<string> GetBookByTitleFromOpenLibraryApi(string title);
+        Task<SearchByTitleResult> GetBookByTitleFromOpenLibraryApi(string title);
     }
 }
